@@ -4,6 +4,8 @@
 #include "types.h"
 #include "game/moving_texture.h"
 
+#include "levels/castle_grounds/areas/1/custom/header.h"
+
 // geo
 extern const GeoLayout castle_grounds_geo_000660[];
 extern const GeoLayout castle_grounds_geo_0006F4[];

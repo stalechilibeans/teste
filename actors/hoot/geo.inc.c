@@ -1,62 +1,66 @@
-// 0x0C000018
-const GeoLayout hoot_geo[] = {
-   GEO_SHADOW(SHADOW_CIRCLE_4_VERTS, 0xFF, 100),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 147, -5, NULL),
-         GEO_OPEN_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, hoot_seg5_dl_05004D48),
-            GEO_OPEN_NODE(),
-               GEO_ANIMATED_PART(LAYER_OPAQUE, 96, 0, 0, hoot_seg5_dl_05001DF0),
-               GEO_ANIMATED_PART(LAYER_OPAQUE, 34, -35, 31, NULL),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_ALPHA, 0, 0, 0, hoot_seg5_dl_05003728),
-                  GEO_OPEN_NODE(),
-                     GEO_ANIMATED_PART(LAYER_ALPHA, 91, 0, 0, hoot_seg5_dl_050034D8),
-                     GEO_OPEN_NODE(),
-                        GEO_ANIMATED_PART(LAYER_ALPHA, 121, 0, 0, hoot_seg5_dl_050033B0),
-                        GEO_ANIMATED_PART(LAYER_OPAQUE, 121, 0, 0, NULL),
-                     GEO_CLOSE_NODE(),
-                     GEO_ANIMATED_PART(LAYER_OPAQUE, 91, 0, 0, NULL),
-                  GEO_CLOSE_NODE(),
-                  GEO_ANIMATED_PART(LAYER_ALPHA, 0, 0, 0, hoot_seg5_dl_05003600),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-               GEO_CLOSE_NODE(),
-               GEO_ANIMATED_PART(LAYER_OPAQUE, -31, 5, 37, NULL),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, hoot_seg5_dl_05004A98),
-                  GEO_OPEN_NODE(),
-                     GEO_ANIMATED_PART(LAYER_OPAQUE, 42, 0, 0, hoot_seg5_dl_05004928),
-                  GEO_CLOSE_NODE(),
-               GEO_CLOSE_NODE(),
-               GEO_ANIMATED_PART(LAYER_OPAQUE, -31, 5, -37, NULL),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, hoot_seg5_dl_05004CA8),
-                  GEO_OPEN_NODE(),
-                     GEO_ANIMATED_PART(LAYER_OPAQUE, 42, 0, 0, hoot_seg5_dl_05004B38),
-                  GEO_CLOSE_NODE(),
-               GEO_CLOSE_NODE(),
-               GEO_ANIMATED_PART(LAYER_OPAQUE, 34, -35, -31, NULL),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_ALPHA, 0, 0, 0, hoot_seg5_dl_05003288),
-                  GEO_OPEN_NODE(),
-                     GEO_ANIMATED_PART(LAYER_ALPHA, 91, 0, 0, hoot_seg5_dl_05003038),
-                     GEO_OPEN_NODE(),
-                        GEO_ANIMATED_PART(LAYER_ALPHA, 121, 0, 0, hoot_seg5_dl_05002F10),
-                        GEO_ANIMATED_PART(LAYER_OPAQUE, 121, 0, 0, NULL),
-                     GEO_CLOSE_NODE(),
-                     GEO_ANIMATED_PART(LAYER_OPAQUE, 91, 0, 0, NULL),
-                  GEO_CLOSE_NODE(),
-                  GEO_ANIMATED_PART(LAYER_ALPHA, 0, 0, 0, hoot_seg5_dl_05003160),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+/**********************************************************
+		Bird Hierarchy!!
+***********************************************************/
+
+Hierarchy RCP_birdHierarchy[] = { 
+
+	hmsShadow(100, 255, 1)
+	hmsBegin()
+		hmsScale(0.25f)
+		hmsBegin()
+		    hmsJoint(RM_SURF,NULL, 0, 147, -5)										/* chn4		*/
+			hmsBegin()
+			    hmsJoint(RM_SURF,RCP_bird_base21, 0, 0, 0)							/* b_body1	*/
+				hmsBegin()
+				    hmsJoint(RM_SURF,gfx_b_head, 96, 0, 0)							/* b_head1	*/
+				    hmsJoint(RM_SURF,NULL, 34, -35, 31)								/* chn11		*/
+					hmsBegin()
+					    hmsJoint(RM_SPRITE,gfx_rwing4, 0, 0, 0)						/* face11		*/
+						hmsBegin()
+						    hmsJoint(RM_SPRITE,gfx_rwing2, 91, 0, 0)				/* face10		*/
+							hmsBegin()
+							    hmsJoint(RM_SPRITE,gfx_rwing1, 121, 0, 0)			/* face9		*/
+							    hmsJoint(RM_SURF, NULL, 121, 0, 0)					/* face13		*/
+							hmsEnd()
+						    hmsJoint(RM_SURF,NULL,  91, 0, 0)						/* face14		*/
+						hmsEnd()
+					    hmsJoint(RM_SPRITE,gfx_rwing3, 0, 0, 0)						/* face12	<wing>	*/ 
+					    hmsJoint(RM_SURF,NULL, 0, 0, 0)								/* face15	<wing>	*/
+					    hmsJoint(RM_SURF,NULL,  0, 0, 0)							/* face16	<wing>	*/
+					hmsEnd()
+				    hmsJoint(RM_SURF,NULL, -31, 5, 37)								/* chn1		*/
+					hmsBegin()
+					    hmsJoint(RM_SURF,RCP_bird_base4 , 0, 0, 0)					/* b_lleg1		*/
+						hmsBegin()
+						    hmsJoint(RM_SURF,RCP_bird_base3 , 42, 0, 0)				/* b_lfoot1		*/
+						hmsEnd()
+					hmsEnd()
+				    hmsJoint(RM_SURF,NULL, -31, 5, -37)								/* chn3		*/
+					hmsBegin()
+					    hmsJoint(RM_SURF,RCP_bird_base6 , 0, 0, 0)					/* b_rleg1		*/
+						hmsBegin()
+						    hmsJoint(RM_SURF,RCP_bird_base5 , 42, 0, 0)				/* b_rfoot1		*/
+						hmsEnd()
+					hmsEnd()
+				    hmsJoint(RM_SURF,NULL, 34,-35, -31)								/* chn16		*/
+						hmsBegin()
+						    hmsJoint(RM_SPRITE,gfx_lwing4 , 0, 0, 0)				/* face43		*/
+							hmsBegin()
+							    hmsJoint(RM_SPRITE,gfx_lwing2 , 91, 0, 0)			/* face41		*/
+								hmsBegin()
+								    hmsJoint(RM_SPRITE,gfx_lwing1 , 121, 0, 0)		/* face39	wing1	*/
+								    hmsJoint(RM_SURF,NULL  , 121, 0, 0)				/* face40	wing1r	*/
+								hmsEnd()
+							    hmsJoint(RM_SURF,NULL  , 91, 0, 0)					/* face42		*/
+							hmsEnd()
+						    hmsJoint(RM_SPRITE,gfx_lwing3 , 0, 0, 0)				/* face44	<wing>	*/
+						    hmsJoint(RM_SURF,NULL , 0, 0, 0)						/* face45	<wing>	*/
+						    hmsJoint(RM_SURF,NULL  , 0, 0, 0)						/* face46	<wing>	*/
+						hmsEnd()
+					hmsEnd()
+				hmsEnd()
+			hmsEnd()
+		hmsEnd()
+	hmsEnd()
+	hmsExit()				
 };

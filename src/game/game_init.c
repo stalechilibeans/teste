@@ -46,7 +46,6 @@ UNUSED u8 filler80339D30[0x90];
 
 int unused8032C690 = 0;
 u32 gGlobalTimer = 0;
-
 static u16 sCurrFBNum = 0;
 u16 frameBufferIndex = 0;
 void (*D_8032C6A0)(void) = NULL;
@@ -590,7 +589,7 @@ void thread5_game_loop(UNUSED void *arg) {
 #ifdef VERSION_SH
     create_thread_6();
 #endif
-    save_file_load_all();
+    save_file_create_temporary_file();
 
     set_vblank_handler(2, &gGameVblankHandler, &gGameVblankQueue, (OSMesg) 1);
 

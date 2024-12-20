@@ -68,9 +68,9 @@
 
 #define SOUND_ACTION_TERRAIN_JUMP               SOUND_ARG_LOAD(0, 4, 0x00, 0x80, 8)
 #define SOUND_ACTION_TERRAIN_LANDING            SOUND_ARG_LOAD(0, 4, 0x08, 0x80, 8)
-#define SOUND_ACTION_TERRAIN_STEP               SOUND_ARG_LOAD(0, 6, 0x10, 0x80, 8)
+#define SOUND_ACTION_TERRAIN_STEP               SOUND_ARG_LOAD(0, 4, 0x10, 0x80, 8)
 #define SOUND_ACTION_TERRAIN_BODY_HIT_GROUND    SOUND_ARG_LOAD(0, 4, 0x18, 0x80, 8)
-#define SOUND_ACTION_TERRAIN_STEP_TIPTOE        SOUND_ARG_LOAD(0, 6, 0x20, 0x80, 8)
+#define SOUND_ACTION_TERRAIN_STEP_TIPTOE        SOUND_ARG_LOAD(0, 4, 0x20, 0x80, 8)
 #define SOUND_ACTION_TERRAIN_STUCK_IN_GROUND    SOUND_ARG_LOAD(0, 4, 0x48, 0x80, 8)
 #define SOUND_ACTION_TERRAIN_HEAVY_LANDING      SOUND_ARG_LOAD(0, 4, 0x60, 0x80, 8)
 
@@ -223,7 +223,7 @@
 /* not verified */ #define SOUND_GENERAL_QUIET_BUBBLE2      SOUND_ARG_LOAD(3, 0, 0x0D, 0x00, 8)
 #define SOUND_GENERAL_CASTLE_TRAP_OPEN                      SOUND_ARG_LOAD(3, 0, 0x0E, 0x80, 8)
 #define SOUND_GENERAL_WALL_EXPLOSION                        SOUND_ARG_LOAD(3, 0, 0x0F, 0x00, 8)
-/* not verified */ #define SOUND_GENERAL_COIN               SOUND_ARG_LOAD(3, 8, 0x11, 0x80, 8)
+/* not verified */ #define SOUND_GENERAL_COIN               SOUND_ARG_LOAD(3, 0, 0x11, 0x80, 8)
 /* not verified */ #define SOUND_GENERAL_COIN_WATER         SOUND_ARG_LOAD(3, 8, 0x12, 0x80, 8)
 /* not verified */ #define SOUND_GENERAL_SHORT_STAR         SOUND_ARG_LOAD(3, 0, 0x16, 0x00, 9)
 /* not verified */ #define SOUND_GENERAL_BIG_CLOCK          SOUND_ARG_LOAD(3, 0, 0x17, 0x00, 8)
@@ -476,7 +476,7 @@
 
 /* Menu Sound Effects */
 #define SOUND_MENU_CHANGE_SELECT                            SOUND_ARG_LOAD(7, 0, 0x00, 0xF8, 8)
-/* not verified */ #define SOUND_MENU_REVERSE_PAUSE         0x7001
+/* not verified */ #define SOUND_MENU_REVERSE_PAUSE         0x70010081
 #define SOUND_MENU_PAUSE                                    SOUND_ARG_LOAD(7, 0, 0x02, 0xF0, 8)
 #define SOUND_MENU_PAUSE_HIGHPRIO                           SOUND_ARG_LOAD(7, 0, 0x02, 0xFF, 8)
 #define SOUND_MENU_PAUSE_2                                  SOUND_ARG_LOAD(7, 0, 0x03, 0xFF, 8)

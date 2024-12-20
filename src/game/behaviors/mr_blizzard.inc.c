@@ -10,7 +10,8 @@ struct ObjectHitbox sMrBlizzardHitbox = {
     /* hurtboxHeight:     */ 170,
 };
 
-void mr_blizzard_spawn_white_particles(s8 count, s8 offsetY, s8 forwardVelBase, s8 velYBase, s8 sizeBase) {
+void mr_blizzard_spawn_white_particles(s8 count, s8 offsetY, s8 forwardVelBase, s8 velYBase,
+                                       s8 sizeBase) {
     static struct SpawnParticlesInfo D_80331A00 = {
         /* behParam:        */ 0,
         /* count:           */ 6,

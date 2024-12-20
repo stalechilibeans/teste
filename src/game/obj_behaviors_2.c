@@ -120,7 +120,6 @@ f32 sObjSavedPosX;
 f32 sObjSavedPosY;
 f32 sObjSavedPosZ;
 
-void shelled_koopa_attack_handler(s32 attackType);
 void wiggler_jumped_on_attack_handler(void);
 void huge_goomba_weakly_attacked(void);
 
@@ -773,10 +772,6 @@ static s32 obj_handle_attacks(struct ObjectHitbox *hitbox, s32 attackedMarioActi
                     obj_set_squished_action();
                     break;
 
-                case ATTACK_HANDLER_SPECIAL_KOOPA_LOSE_SHELL:
-                    shelled_koopa_attack_handler(attackType);
-                    break;
-
                 case ATTACK_HANDLER_SET_SPEED_TO_ZERO:
                     obj_set_speed_to_zero();
                     break;
@@ -941,7 +936,6 @@ static void treat_far_home_as_mario(f32 threshold) {
     }
 }
 
-#include "behaviors/koopa.inc.c" // TODO: Text arg field name
 #include "behaviors/pokey.inc.c"
 #include "behaviors/swoop.inc.c"
 #include "behaviors/fly_guy.inc.c"
@@ -1005,7 +999,6 @@ void obj_spit_fire(s16 relativePosX, s16 relativePosY, s16 relativePosZ, f32 sca
 #include "behaviors/eyerok.inc.c"
 #include "behaviors/klepto.inc.c"
 #include "behaviors/bird.inc.c"
-#include "behaviors/racing_penguin.inc.c"
 #include "behaviors/coffin.inc.c"
 #include "behaviors/clam.inc.c"
 #include "behaviors/skeeter.inc.c"

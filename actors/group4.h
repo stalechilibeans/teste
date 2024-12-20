@@ -58,20 +58,13 @@ extern const GeoLayout manta_seg5_geo_05008D14[];
 extern const struct Animation *const manta_seg5_anims_05008EB4[];
 
 // sushi
-extern const GeoLayout sushi_geo[];
-extern const Gfx sushi_seg5_dl_05009CC0[];
-extern const Gfx sushi_seg5_dl_05009DD0[];
-extern const Gfx sushi_seg5_dl_05009F30[];
-extern const Gfx sushi_seg5_dl_0500A008[];
-extern const Gfx sushi_seg5_dl_0500A0E8[];
-extern const Gfx sushi_seg5_dl_0500A160[];
-extern const Gfx sushi_seg5_dl_0500A580[];
-extern const Gfx sushi_seg5_dl_0500A748[];
-extern const Gfx sushi_seg5_dl_0500A768[];
-extern const Gfx sushi_seg5_dl_0500A860[];
-extern const Gfx sushi_seg5_dl_0500A8A8[];
-extern const Gfx sushi_seg5_dl_0500A958[];
-extern const Gfx sushi_seg5_dl_0500A990[];
+extern GeoLayout RCP_HmsEnemyShark[];
+extern Gfx RCP_s_bodyA[];
+extern Gfx RCP_s_bodyB[];
+extern Gfx RCP_s_bodyC[];
+extern Gfx RCP_s_bodyD[];
+extern Gfx RCP_s_head_surf[];
+extern Gfx RCP_s_head_sprite[];
 extern const struct Animation *const sushi_seg5_anims_0500AE54[];
 
 // unagi

@@ -53,11 +53,6 @@ void bhv_big_bully_init(void) {
 
 void bully_check_mario_collision(void) {
     if (o->oInteractStatus & INT_STATUS_INTERACTED) {
-        if (o->oBehParams2ndByte == BULLY_BP_SIZE_SMALL)
-            cur_obj_play_sound_2(SOUND_OBJ2_BULLY_ATTACKED);
-        else
-            cur_obj_play_sound_2(SOUND_OBJ2_LARGE_BULLY_ATTACKED);
-
         o->oInteractStatus &= ~INT_STATUS_INTERACTED;
         o->oAction = BULLY_ACT_KNOCKBACK;
         o->oFlags &= ~0x8; /* bit 3 */
@@ -84,7 +79,7 @@ void bully_act_chase_mario(void) {
             o->oTimer = 0;
     }
 
-    if (!is_point_within_radius_of_mario(homeX, posY, homeZ, 1000)) {
+    if (!is_point_within_radius_of_mario(homeX, posY, homeZ, 600)) {
         o->oAction = BULLY_ACT_PATROL;
         cur_obj_init_animation(0);
     }
@@ -177,13 +172,6 @@ void bully_step(void) {
 
 void bully_spawn_coin(void) {
     struct Object *coin = spawn_object(o, MODEL_YELLOW_COIN, bhvMovingYellowCoin);
-#ifdef VERSION_JP //TODO: maybe move this ifdef logic to the header?
-    cur_obj_play_sound_2(SOUND_GENERAL_COIN_SPURT);
-#elif VERSION_EU
-    cur_obj_play_sound_2(SOUND_GENERAL_COIN_SPURT_EU);
-#else
-    cur_obj_play_sound_2(SOUND_GENERAL_COIN_SPURT_2);
-#endif
     coin->oForwardVel = 10.0f;
     coin->oVelY = 100.0f;
     coin->oPosY = o->oPosY + 310.0f;
@@ -225,7 +213,7 @@ void bhv_bully_loop(void) {
         case BULLY_ACT_PATROL:
             o->oForwardVel = 5.0;
 
-            if (obj_return_home_if_safe(o, o->oHomeX, o->oPosY, o->oHomeZ, 800) == 1) {
+            if (obj_return_home_if_safe(o, o->oHomeX, o->oPosY, o->oHomeZ, 400) == 1) {
                 o->oAction = BULLY_ACT_CHASE_MARIO;
                 cur_obj_init_animation(1);
             }
@@ -285,19 +273,12 @@ void bhv_big_bully_with_minions_init(void) {
 }
 
 void big_bully_spawn_star(void) {
-    if (obj_lava_death() == 1) {
-        spawn_mist_particles();
-        spawn_default_star(3700.0f, 600.0f, -5500.0f);
-    }
+    spawn_mist_particles();
+
+    spawn_default_star(3850.0f, 600.0f, -5600.0f);
 }
 
 void bhv_big_bully_with_minions_loop(void) {
-#ifdef VERSION_EU
-    s32 collisionFlags;
-#else
-    s16 collisionFlags;
-#endif
-
     o->oBullyPrevX = o->oPosX;
     o->oBullyPrevY = o->oPosY;
     o->oBullyPrevZ = o->oPosZ;
@@ -332,39 +313,10 @@ void bhv_big_bully_with_minions_loop(void) {
             break;
 
         case BULLY_ACT_INACTIVE:
-            //! The Big Bully that spawns from killing its 3 minions uses the knockback timer
-            //  for counting the number of dead minions. This means that when it activates,
-            //  the knockback timer is at 3 instead of 0. So the bully knockback time will
-            //  be reduced by 3 frames (16.67%) on the first hit.
             if (o->oBullyKBTimerAndMinionKOCounter == 3) {
-                play_puzzle_jingle();
-
-                if (o->oTimer >= 91)
-                    o->oAction = BULLY_ACT_ACTIVATE_AND_FALL;
+                big_bully_spawn_star();
+                o->activeFlags = 0;
             }
-            break;
-
-        case BULLY_ACT_ACTIVATE_AND_FALL:
-            collisionFlags = object_step();
-            if ((collisionFlags & 0x9) == 0x9) /* bits 0 and 3 */
-                o->oAction = BULLY_ACT_PATROL;
-
-            if (collisionFlags == 1) {
-                cur_obj_play_sound_2(SOUND_OBJ_THWOMP);
-                set_camera_shake_from_point(SHAKE_POS_SMALL, o->oPosX, o->oPosY, o->oPosZ);
-                spawn_mist_particles();
-            }
-
-            o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
-            cur_obj_become_tangible();
-            break;
-
-        case BULLY_ACT_LAVA_DEATH:
-            big_bully_spawn_star();
-            break;
-
-        case BULLY_ACT_DEATH_PLANE_DEATH:
-            o->activeFlags = 0;
             break;
     }
 }

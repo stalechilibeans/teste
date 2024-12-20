@@ -7,14 +7,14 @@
 #include "game/camera.h"
 #include "game/moving_texture.h"
 #include "game/screen_transition.h"
+#include "game/areamap.h"
 #include "game/paintings.h"
 
 #include "make_const_nonconst.h"
 
 #include "levels/ddd/header.h"
+#include "levels/ddd/areas/1/custom/header.h"
+#include "levels/ddd/areas/2/custom/header.h"
 
-#include "levels/ddd/pole/geo.inc.c"
-#include "levels/ddd/sub_door/geo.inc.c"
-#include "levels/ddd/submarine/geo.inc.c"
-#include "levels/ddd/areas/1/geo.inc.c"
-#include "levels/ddd/areas/2/geo.inc.c"
+#include "levels/ddd/areas/1/custom/geoinclude.h"
+#include "levels/ddd/areas/2/custom/geoinclude.h"

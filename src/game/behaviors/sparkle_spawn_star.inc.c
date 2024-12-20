@@ -106,7 +106,7 @@ void bhv_spawned_star_loop(void) {
         slow_star_rotation();
     }
     cur_obj_move_using_fvel_and_gravity();
-    o->oFaceAngleYaw += o->oAngleVelYaw;
+    o->oAnimState++;
     o->oInteractStatus = 0;
 }
 

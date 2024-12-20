@@ -39,13 +39,13 @@ s32 is_hat_ukiki_and_mario_has_hat(void) {
 /**
  * Unused copy of geo_update_projectile_pos_from_parent. Perhaps a copy paste mistake.
  */
-Gfx *geo_update_projectile_pos_from_parent_copy(s32 run,UNUSED struct GraphNode *node, Mat4 mtx) {
+Gfx *geo_update_projectile_pos_from_parent_copy(s32 run, UNUSED struct GraphNode *node, Mat4 mtx) {
     Mat4 mtx2;
-    struct Object* obj;
+    struct Object *obj;
 
     if (run == TRUE) {
         // TODO: change global type to Object pointer
-        obj = (struct Object*)gCurGraphNodeObject;
+        obj = (struct Object *) gCurGraphNodeObject;
 
         if (obj->prevObj != NULL) {
             create_transformation_from_matrices(mtx2, mtx, gCurGraphNodeCamera->matrixPtr);
@@ -74,7 +74,7 @@ void idle_ukiki_taunt(void) {
     }
 
     // Switch goes from 1-4.
-    switch(o->oSubAction) {
+    switch (o->oSubAction) {
         case UKIKI_SUB_ACT_TAUNT_ITCH:
             cur_obj_init_animation_with_sound(UKIKI_ANIM_ITCH);
 
@@ -128,7 +128,7 @@ void ukiki_act_idle(void) {
         if (o->oDistanceToMario > 700.0f && o->oDistanceToMario < 1000.0f) {
             o->oAction = UKIKI_ACT_RUN;
         } else if (o->oDistanceToMario <= 700.0f && 200.0f < o->oDistanceToMario) {
-            if (abs_angle_diff(o->oAngleToMario, o->oMoveAngleYaw) > 0x1000)    {
+            if (abs_angle_diff(o->oAngleToMario, o->oMoveAngleYaw) > 0x1000) {
                 o->oAction = UKIKI_ACT_TURN_TO_MARIO;
             }
         }
@@ -232,7 +232,7 @@ void ukiki_act_turn_to_mario(void) {
         o->oAction = UKIKI_ACT_IDLE;
     }
 
-    if (is_hat_ukiki_and_mario_has_hat()){
+    if (is_hat_ukiki_and_mario_has_hat()) {
         if (o->oDistanceToMario > 500.0f) {
             o->oAction = UKIKI_ACT_RUN;
         }
@@ -274,11 +274,10 @@ void ukiki_act_run(void) {
 
     if (fleeMario) {
         if (o->oDistanceToMario < 200.0f) {
-            if((o->oMoveFlags & OBJ_MOVE_HIT_WALL) &&
-                is_mario_moving_fast_or_in_air(10)) {
+            if ((o->oMoveFlags & OBJ_MOVE_HIT_WALL) && is_mario_moving_fast_or_in_air(10)) {
                 o->oAction = UKIKI_ACT_JUMP;
                 o->oMoveAngleYaw = o->oWallAngle;
-            } else if((o->oMoveFlags & OBJ_MOVE_HIT_EDGE)) {
+            } else if ((o->oMoveFlags & OBJ_MOVE_HIT_EDGE)) {
                 if (is_mario_moving_fast_or_in_air(10)) {
                     o->oAction = UKIKI_ACT_JUMP;
                     o->oMoveAngleYaw += 0x8000;
@@ -320,18 +319,9 @@ void ukiki_act_jump(void) {
  * TODO: Convert to an array of waypoints, perhaps? -1 is tricky.
  */
 s16 sCageUkikiPath[] = {
-    0, 1011, 2306,  -285,
-    0, 1151, 2304,  -510,
-    0, 1723, 1861,  -964,
-    0, 2082, 1775, -1128,
-    0, 2489, 1717, -1141,
-    0, 2662, 1694, -1140,
-    0, 2902, 1536,  -947,
-    0, 2946, 1536,  -467,
-    0, 2924, 1536,    72,
-    0, 2908, 1536,   536,
-    0, 2886, 1536,   783,
-    -1,
+    0,     1011, 2306, -285, 0,     1151, 2304, -510, 0,     1723, 1861, -964, 0,    2082, 1775,
+    -1128, 0,    2489, 1717, -1141, 0,    2662, 1694, -1140, 0,    2902, 1536, -947, 0,    2946,
+    1536,  -467, 0,    2924, 1536,  72,   0,    2908, 1536,  536,  0,    2886, 1536, 783,  -1,
 };
 
 /**
@@ -339,7 +329,7 @@ s16 sCageUkikiPath[] = {
  * our death. Ukiki is a tad suicidal.
  */
 void ukiki_act_go_to_cage(void) {
-    struct Object* obj;
+    struct Object *obj;
     f32 latDistToCage = 0.0f;
     s16 yawToCage = 0;
     obj = cur_obj_nearest_object_with_behavior(bhvUkikiCageChild);
@@ -355,10 +345,10 @@ void ukiki_act_go_to_cage(void) {
     o->oFlags |= OBJ_FLAG_ACTIVE_FROM_AFAR;
 
     // Switch goes from 0-7 in order.
-    switch(o->oSubAction) {
+    switch (o->oSubAction) {
         case UKIKI_SUB_ACT_CAGE_RUN_TO_CAGE:
             cur_obj_init_animation_with_sound(UKIKI_ANIM_RUN);
-            
+
             o->oPathedWaypointsS16 = sCageUkikiPath;
 
             if (cur_obj_follow_path(0) != PATH_REACHED_END) {
@@ -378,7 +368,7 @@ void ukiki_act_go_to_cage(void) {
             if (cur_obj_can_mario_activate_textbox(200.0f, 30.0f, 0x7FFF)) {
                 o->oSubAction++; // fallthrough
             } else {
-            break;
+                break;
             }
 
         case UKIKI_SUB_ACT_CAGE_TALK_TO_MARIO:
@@ -442,19 +432,19 @@ void ukiki_act_go_to_cage(void) {
  * SoundState number.
  */
 struct SoundState sUkikiSoundStates[] = {
-    {1, 1, 10, SOUND_OBJ_UKIKI_STEP_DEFAULT},
-    {0, 0, 0,  NO_SOUND},
-    {0, 0, 0,  NO_SOUND},
-    {0, 0, 0,  NO_SOUND},
-    {1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_SHORT},
-    {1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_LONG},
-    {0, 0, 0,  NO_SOUND},
-    {0, 0, 0,  NO_SOUND},
-    {1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_LONG},
-    {1, 0, -1, SOUND_OBJ_UKIKI_STEP_LEAVES},
-    {1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_IDLE},
-    {0, 0, 0,  NO_SOUND},
-    {0, 0, 0,  NO_SOUND},
+    { 1, 1, 10, SOUND_OBJ_UKIKI_STEP_DEFAULT },
+    { 0, 0, 0, NO_SOUND },
+    { 0, 0, 0, NO_SOUND },
+    { 0, 0, 0, NO_SOUND },
+    { 1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_SHORT },
+    { 1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_LONG },
+    { 0, 0, 0, NO_SOUND },
+    { 0, 0, 0, NO_SOUND },
+    { 1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_LONG },
+    { 1, 0, -1, SOUND_OBJ_UKIKI_STEP_LEAVES },
+    { 1, 0, -1, SOUND_OBJ_UKIKI_CHATTER_IDLE },
+    { 0, 0, 0, NO_SOUND },
+    { 0, 0, 0, NO_SOUND },
 };
 
 /**
@@ -462,15 +452,10 @@ struct SoundState sUkikiSoundStates[] = {
  * every frame.
  */
 void (*sUkikiActions[])(void) = {
-    ukiki_act_idle,
-    ukiki_act_run,
-    ukiki_act_turn_to_mario,
-    ukiki_act_jump,
-    ukiki_act_go_to_cage,
-    ukiki_act_wait_to_respawn,
-    ukiki_act_unused_turn,
-    ukiki_act_return_home,
-    };
+    ukiki_act_idle,        ukiki_act_run,         ukiki_act_turn_to_mario,
+    ukiki_act_jump,        ukiki_act_go_to_cage,  ukiki_act_wait_to_respawn,
+    ukiki_act_unused_turn, ukiki_act_return_home,
+};
 
 /**
  * Called via the main behavior function when Ukiki is either nothing
@@ -491,7 +476,7 @@ void ukiki_free_loop(void) {
     cur_obj_move_standard(steepSlopeAngleDegrees);
     handle_hat_ukiki_reset();
 
-    if(!(o->oMoveFlags & OBJ_MOVE_MASK_IN_WATER)) {
+    if (!(o->oMoveFlags & OBJ_MOVE_MASK_IN_WATER)) {
         exec_anim_sound_state(sUkikiSoundStates);
     }
 }
@@ -515,7 +500,7 @@ static void ukiki_blink_timer(void) {
  */
 void cage_ukiki_held_loop(void) {
     if (o->oPosY - o->oHomeY > -100.0f) {
-        switch(o->oUkikiTextState) {
+        switch (o->oUkikiTextState) {
             case UKIKI_TEXT_DEFAULT:
                 if (set_mario_npc_dialog(2) == 2) {
                     create_dialog_box_with_response(DIALOG_079);
@@ -559,12 +544,13 @@ void cage_ukiki_held_loop(void) {
  * Called by the main behavior function for the hat ukiki whenever it is held.
  */
 void hat_ukiki_held_loop(void) {
-    switch(o->oUkikiTextState) {
+    switch (o->oUkikiTextState) {
         case UKIKI_TEXT_DEFAULT:
             if (mario_lose_cap_to_enemy(2)) {
                 o->oUkikiTextState = UKIKI_TEXT_STEAL_HAT;
                 o->oUkikiHasHat |= UKIKI_HAT_ON;
-            } else {}
+            } else {
+            }
             break;
 
         case UKIKI_TEXT_STEAL_HAT:
@@ -610,7 +596,7 @@ void bhv_ukiki_init(void) {
  * dependent on the held state and whick ukiki it is (cage or hat).
  */
 void bhv_ukiki_loop(void) {
-    switch(o->oHeldState) {
+    switch (o->oHeldState) {
         case HELD_FREE:
             //! @bug (PARTIAL_UPDATE)
             o->oUkikiTextboxTimer = 0;

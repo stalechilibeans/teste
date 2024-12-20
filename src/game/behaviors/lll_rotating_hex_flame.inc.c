@@ -14,11 +14,9 @@ void fire_bar_spawn_flames(s16 a0) {
     struct Object *sp2C;
     UNUSED s32 unused;
     s32 i;
-    s32 sp20;
     f32 sp1C = sins(a0) * 200.0f;
     f32 sp18 = coss(a0) * 200.0f;
-    sp20 = (o->oBehParams2ndByte == 0) ? 4 : 3;
-    for (i = 0; i < sp20; i++) {
+    for (i = 0; i < 5; i++) {
         sp2C = spawn_object(o, MODEL_RED_FLAME, bhvLllRotatingHexFlame);
         sp2C->oLllRotatingHexFlameUnkF4 += sp1C;
         sp2C->oLllRotatingHexFlameUnkF8 = o->oPosY - 200.0f;
@@ -35,8 +33,9 @@ void fire_bar_act_0(void) {
 }
 
 void fire_bar_act_1(void) {
+    fire_bar_spawn_flames(0x5500);
     fire_bar_spawn_flames(0);
-    fire_bar_spawn_flames(-0x8000);
+    fire_bar_spawn_flames(-0x5500);
     o->oAngleVelYaw = 0;
     o->oMoveAngleYaw = 0;
     o->oAction = 2;
@@ -53,8 +52,8 @@ void fire_bar_act_3(void) {
     o->oAction = 0;
 }
 
-void (*sRotatingCwFireBarsActions[])(void) = { fire_bar_act_0, fire_bar_act_1,
-                                               fire_bar_act_2, fire_bar_act_3 };
+void (*sRotatingCwFireBarsActions[])(void) = { fire_bar_act_0, fire_bar_act_1, fire_bar_act_2,
+                                               fire_bar_act_3 };
 
 void bhv_lll_rotating_block_fire_bars_loop(void) {
     cur_obj_call_action_function(sRotatingCwFireBarsActions);

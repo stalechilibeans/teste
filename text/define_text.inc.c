@@ -22,7 +22,7 @@ static const u8 Debug1[] = {
 };
 
 static const struct DialogEntry debug_text_entry_0 = {
-    1, 8, 30, 200, Debug0
+    1, 8, 52, 205, Debug0
 };
 
 static const struct DialogEntry debug_text_entry_1 = {

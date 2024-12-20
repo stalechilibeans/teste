@@ -286,12 +286,6 @@ void play_sound_and_spawn_particles(struct MarioState *m, u32 soundBits, u32 wav
         } else {
             m->particleFlags |= PARTICLE_SHALLOW_WATER_WAVE;
         }
-    } else {
-        if (m->terrainSoundAddend == (SOUND_TERRAIN_SAND << 16)) {
-            m->particleFlags |= PARTICLE_DIRT;
-        } else if (m->terrainSoundAddend == (SOUND_TERRAIN_SNOW << 16)) {
-            m->particleFlags |= PARTICLE_SNOW;
-        }
     }
 
     if ((m->flags & MARIO_METAL_CAP) || soundBits == SOUND_ACTION_UNSTUCK_FROM_GROUND
@@ -802,7 +796,7 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
             break;
 
         case ACT_TRIPLE_JUMP:
-            set_mario_y_vel_based_on_fspeed(m, 69.0f, 0.0f);
+            set_mario_y_vel_based_on_fspeed(m, 62.0f, 0.0f);
             m->forwardVel *= 0.8f;
             break;
 
@@ -843,7 +837,7 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
             break;
 
         case ACT_SIDE_FLIP:
-            set_mario_y_vel_based_on_fspeed(m, 62.0f, 0.0f);
+            set_mario_y_vel_based_on_fspeed(m, 48.0f, 0.0f);
             m->forwardVel = 8.0f;
             m->faceAngle[1] = m->intendedYaw;
             break;
@@ -1243,13 +1237,18 @@ void debug_print_speed_action_normal(struct MarioState *m) {
     f32 steepness;
     f32 floor_nY;
 
+#ifdef TPP_DEBUG
+    print_text_fmt_int(16, 48, "X %d", m->pos[0]);
+    print_text_fmt_int(16, 32, "Y %d", m->pos[1]);
+    print_text_fmt_int(16, 16, "Z %d", m->pos[2]);
+#endif
+
     if (gShowDebugText) {
         steepness = sqrtf(
             ((m->floor->normal.x * m->floor->normal.x) + (m->floor->normal.z * m->floor->normal.z)));
         floor_nY = m->floor->normal.y;
 
         print_text_fmt_int(210, 88, "ANG %d", (atan2s(floor_nY, steepness) * 180.0f) / 32768.0f);
-
         print_text_fmt_int(210, 72, "SPD %d", m->forwardVel);
 
         // STA short for "status," the official action name via SMS map.
@@ -1478,10 +1477,12 @@ void update_mario_health(struct MarioState *m) {
                     // when in snow terrains lose 3 health.
                     // If using the debug level select, do not lose any HP to water.
                     if ((m->pos[1] >= (m->waterLevel - 140)) && !terrainIsSnow) {
-                        m->health += 0x1A;
+                        m->health += 0x34;
                     } else if (gDebugLevelSelect == 0) {
                         m->health -= (terrainIsSnow ? 3 : 1);
                     }
+                } else {
+                    m->health++;
                 }
             }
         }
@@ -1500,21 +1501,6 @@ void update_mario_health(struct MarioState *m) {
         }
         if (m->health < 0x100) {
             m->health = 0xFF;
-        }
-
-        // Play a noise to alert the player when Mario is close to drowning.
-        if (((m->action & ACT_GROUP_MASK) == ACT_GROUP_SUBMERGED) && (m->health < 0x300)) {
-            play_sound(SOUND_MOVING_ALMOST_DROWNING, gDefaultSoundArgs);
-#ifdef VERSION_SH
-            if (!gRumblePakTimer) {
-                gRumblePakTimer = 36;
-                if (is_rumble_finished_and_queue_empty()) {
-                    queue_rumble_data(3, 30);
-                }
-            }
-        } else {
-            gRumblePakTimer = 0;
-#endif
         }
     }
 }
@@ -1632,15 +1618,6 @@ void mario_update_hitbox_and_cap_model(struct MarioState *m) {
 
     if (flags & MARIO_METAL_SHOCK) {
         bodyState->modelState |= MODEL_STATE_METAL;
-    }
-
-    if (m->invincTimer >= 3) {
-        //! (Pause buffered hitstun) Since the global timer increments while paused,
-        //  this can be paused through to give continual invisibility. This leads to
-        //  no interaction with objects.
-        if (gGlobalTimer & 1) {
-            gMarioState->marioObj->header.gfx.node.flags |= GRAPH_RENDER_INVISIBLE;
-        }
     }
 
     if (flags & MARIO_CAP_IN_HAND) {
@@ -1897,7 +1874,7 @@ void init_mario_from_save_file(void) {
         save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
     gMarioState->numKeys = 0;
 
-    gMarioState->numLives = 4;
+    gMarioState->numLives = 2;
     gMarioState->health = 0x880;
 
     gMarioState->unkB8 = gMarioState->numStars;

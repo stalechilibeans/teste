@@ -10,7 +10,8 @@ void intro_peach_set_pos_and_opacity(struct Object *o, f32 targetOpacity, f32 in
     f32 UNUSED dist, newOpacity;
 
     vec3f_get_dist_and_angle(gLakituState.pos, gLakituState.focus, &dist, &focusPitch, &focusYaw);
-    vec3f_set_dist_and_angle(gLakituState.pos, newPos, o->oIntroPeachDistToCamera, o->oIntroPeachPitchFromFocus + focusPitch,
+    vec3f_set_dist_and_angle(gLakituState.pos, newPos, o->oIntroPeachDistToCamera,
+                             o->oIntroPeachPitchFromFocus + focusPitch,
                              o->oIntroPeachYawFromFocus + focusYaw);
     vec3f_to_object_pos(o, newPos);
     newOpacity = o->oOpacity;

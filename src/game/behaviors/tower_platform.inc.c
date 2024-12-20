@@ -12,7 +12,6 @@ void bhv_wf_elevator_tower_platform_loop(void) {
                 o->oAction++;
             break;
         case 1:
-            cur_obj_play_sound_1(SOUND_ENV_ELEVATOR1);
             if (o->oTimer > 140)
                 o->oAction++;
             else
@@ -23,7 +22,6 @@ void bhv_wf_elevator_tower_platform_loop(void) {
                 o->oAction++;
             break;
         case 3:
-            cur_obj_play_sound_1(SOUND_ENV_ELEVATOR1);
             if (o->oTimer > 140)
                 o->oAction = 0;
             else
@@ -76,13 +74,13 @@ void spawn_wf_platform_group(void) {
     o->oPlatformSpawnerUnk100 = 704.0f;
     o->oPlatformSpawnerUnk104 = 380.0f;
     o->oPlatformSpawnerUnk108 = 3.0f;
-    spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM, bhvWfSolidTowerPlatform);
+    spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM_UNUSED, bhvWfSolidTowerPlatform);
     spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM, bhvWfSlidingTowerPlatform);
-    spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM, bhvWfSolidTowerPlatform);
+    spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM_UNUSED, bhvWfSolidTowerPlatform);
     spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM, bhvWfSlidingTowerPlatform);
-    spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM, bhvWfSolidTowerPlatform);
+    spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM_UNUSED, bhvWfSolidTowerPlatform);
     spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM, bhvWfSlidingTowerPlatform);
-    spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM, bhvWfSolidTowerPlatform);
+    spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM_UNUSED, bhvWfSolidTowerPlatform);
     spawn_and_init_wf_platforms(MODEL_WF_TOWER_SQUARE_PLATORM_ELEVATOR, bhvWfElevatorTowerPlatform);
 }
 

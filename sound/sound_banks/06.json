@@ -133,13 +133,28 @@
             "release_rate": 48,
             "envelope": "envelope3",
             "sound": "0D"
+        },
+        "inst14": {
+            "release_rate": 48,
+            "envelope": "envelope3",
+            "sound": "0E"
+        },
+        "inst15": {
+            "release_rate": 57,
+            "envelope": "envelope3",
+            "sound": "0F"
+        },
+        "inst16": {
+            "release_rate": 43,
+            "envelope": "envelope4",
+            "sound": "10"
         }
     },
     "instrument_list": [
         "inst0",
         "inst1",
         "inst2",
-        null,
+        "inst14",
         "inst3",
         "inst4",
         "inst5",
@@ -151,6 +166,8 @@
         "inst11",
         null,
         "inst12",
-        "inst13"
+        "inst13",
+        "inst15",
+        "inst16"
     ]
 }

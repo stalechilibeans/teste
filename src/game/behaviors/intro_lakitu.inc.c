@@ -4,7 +4,6 @@
  * It's also used during the ending cutscene.
  */
 
-
 /**
  * Add the camera's position to `offset`, rotate the point to be relative to the camera's focus, then
  * set lakitu's location.
@@ -15,11 +14,10 @@ void intro_lakitu_set_offset_from_camera(struct Object *o, Vec3f offset) {
     s16 offsetPitch, offsetYaw;
 
     vec3f_add(offset, gCamera->pos);
-    vec3f_get_dist_and_angle(gCamera->pos, gCamera->focus,
-                             &dist, &focusAngles[0], &focusAngles[1]);
+    vec3f_get_dist_and_angle(gCamera->pos, gCamera->focus, &dist, &focusAngles[0], &focusAngles[1]);
     vec3f_get_dist_and_angle(gCamera->pos, offset, &dist, &offsetPitch, &offsetYaw);
-    vec3f_set_dist_and_angle(gCamera->pos, offset, dist,
-                             focusAngles[0] + offsetPitch, focusAngles[1] + offsetYaw);
+    vec3f_set_dist_and_angle(gCamera->pos, offset, dist, focusAngles[0] + offsetPitch,
+                             focusAngles[1] + offsetYaw);
     vec3f_to_object_pos(o, offset);
 }
 
@@ -47,8 +45,12 @@ s32 intro_lakitu_set_pos_and_focus(struct Object *o, struct CutsceneSplinePoint 
     s32 splineFinished = 0;
     s16 splineSegment = o->oIntroLakituSplineSegment;
 
-    if ((move_point_along_spline(newFocus, offset, &splineSegment, &(o->oIntroLakituSplineSegmentProgress)) == 1)
-        || (move_point_along_spline(newOffset, focus, &splineSegment, &(o->oIntroLakituSplineSegmentProgress)) == 1))
+    if ((move_point_along_spline(newFocus, offset, &splineSegment,
+                                 &(o->oIntroLakituSplineSegmentProgress))
+         == 1)
+        || (move_point_along_spline(newOffset, focus, &splineSegment,
+                                    &(o->oIntroLakituSplineSegmentProgress))
+            == 1))
         splineFinished += 1;
 
     o->oIntroLakituSplineSegment = splineSegment;
@@ -85,7 +87,8 @@ void bhv_intro_lakitu_loop(void) {
                 cur_obj_play_sound_1(SOUND_AIR_LAKITU_FLY_HIGHPRIO);
 
             if (intro_lakitu_set_pos_and_focus(gCurrentObject, gIntroLakituStartToPipeOffsetFromCamera,
-                                               gIntroLakituStartToPipeFocus) == 1)
+                                               gIntroLakituStartToPipeFocus)
+                == 1)
                 gCurrentObject->oAction += 1;
 
             switch (gCurrentObject->oTimer) {
@@ -196,8 +199,7 @@ void bhv_intro_lakitu_loop(void) {
                 gCurrentObject->oMoveAngleYaw += 0x78;
                 gCurrentObject->oMoveAnglePitch += 0x40;
                 gCurrentObject->oFaceAngleYaw = camera_approach_s16_symmetric(
-                    gCurrentObject->oFaceAngleYaw, (s16) calculate_yaw(sp4C, gCamera->pos),
-                    0x200);
+                    gCurrentObject->oFaceAngleYaw, (s16) calculate_yaw(sp4C, gCamera->pos), 0x200);
             }
             if (gCurrentObject->oTimer > 105) {
                 gCurrentObject->oAction += 1;

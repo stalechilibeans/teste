@@ -11,22 +11,15 @@ extern const Gfx blargg_seg5_dl_05005D00[];
 extern const struct Animation *const blargg_seg5_anims_0500616C[];
 
 // bully
-extern const GeoLayout bully_geo[];
-extern const GeoLayout bully_boss_geo[];
-extern const Gfx bully_seg5_dl_050002E0[];
-extern const Gfx bully_seg5_dl_05000398[];
-extern const Gfx bully_seg5_dl_05003708[];
-extern const Gfx bully_seg5_dl_050037A0[];
-extern const Gfx bully_seg5_dl_05003838[];
-extern const Gfx bully_seg5_dl_05003878[];
-extern const Gfx bully_seg5_dl_05003CD0[];
-extern const Gfx bully_seg5_dl_05003D08[];
-extern const Gfx bully_seg5_dl_05003D40[];
-extern const Gfx bully_seg5_dl_05003E38[];
-extern const Gfx bully_seg5_dl_05003E70[];
-extern const Gfx bully_seg5_dl_05003EA8[];
-extern const Gfx bully_seg5_dl_05003F80[];
-extern const Gfx bully_seg5_dl_05003FC8[];
+extern const GeoLayout RCP_HmsEnemyotos_basedata[];
+extern const GeoLayout RCP_HmsEnemyBigotos_basedata[];
+extern Gfx RCP_otos_basedata0[];
+extern Gfx RCP_otos_basedata1[];
+extern Gfx RCP_otos_basedata3[];
+extern Gfx RCP_otos_basedata4[];
+extern Gfx gfx_otosu_body[];
+extern Gfx gfx_big_otosu_body[];
+extern Gfx gfx_otosu_eye[];
 extern const struct Animation *const bully_seg5_anims_0500470C[];
 
 #endif

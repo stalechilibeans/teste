@@ -1,8 +1,15 @@
-// 0x0F0001C0
-const GeoLayout cannon_barrel_geo[] = {
-   GEO_NODE_START(),
-   GEO_OPEN_NODE(),
-      GEO_DISPLAY_LIST(LAYER_OPAQUE, cannon_barrel_seg8_dl_08006660),
-   GEO_CLOSE_NODE(),
-   GEO_END(),
+/********************************************************************************
+		RCP_HmsCannonBody
+														[ Oct 23, 1995 ]
+*********************************************************************************/
+
+/********************************************************************************/
+/*	Hierarchy map data of CannonBody.											*/
+/********************************************************************************/
+Hierarchy RCP_HmsCannonBody[] = { 
+	hmsGroup()
+	hmsBegin()
+		hmsGfx(RM_SURF, gfx_cannon_body)
+	hmsEnd()
+  	hmsExit()
 };

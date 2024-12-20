@@ -4,6 +4,9 @@
 #include "types.h"
 #include "game/moving_texture.h"
 
+#include "levels/ddd/areas/1/custom/header.h"
+#include "levels/ddd/areas/2/custom/header.h"
+
 // geo
 extern const GeoLayout ddd_geo_000450[];
 extern const GeoLayout ddd_geo_000478[];

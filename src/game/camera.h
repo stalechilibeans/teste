@@ -266,9 +266,9 @@
 // Might rename these to reflect what they are used for instead "SET_45" etc.
 #define CAM_FOV_SET_45      1
 #define CAM_FOV_DEFAULT     2
-#define CAM_FOV_APP_45      4
+#define CAM_FOV_CASTLE      4
 #define CAM_FOV_SET_30      5
-#define CAM_FOV_APP_20      6
+#define CAM_FOV_APP_57      6
 #define CAM_FOV_BBH         7
 #define CAM_FOV_APP_80      9
 #define CAM_FOV_APP_30      10
@@ -670,6 +670,8 @@ extern struct Camera *gCamera;
 
 extern struct Object *gCutsceneFocus;
 extern struct Object *gSecondCameraFocus;
+
+extern u32 gPrevLevel;
 
 // TODO: sort all of this extremely messy shit out after the split
 

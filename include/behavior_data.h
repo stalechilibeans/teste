@@ -175,7 +175,6 @@ extern const BehaviorScript bhvBowserKeyUnlockDoor[];
 extern const BehaviorScript bhvBowserKeyCourseExit[];
 extern const BehaviorScript bhvInvisibleObjectsUnderBridge[];
 extern const BehaviorScript bhvWaterLevelPillar[];
-extern const BehaviorScript bhvDddWarp[];
 extern const BehaviorScript bhvMoatGrills[];
 extern const BehaviorScript bhvClockMinuteHand[];
 extern const BehaviorScript bhvClockHourHand[];

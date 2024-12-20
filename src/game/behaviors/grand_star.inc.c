@@ -26,7 +26,6 @@ void bhv_grand_star_loop(void) {
     if (o->oAction == 0) {
         if (o->oTimer == 0) {
             obj_set_angle(o, 0, 0, 0);
-            o->oAngleVelYaw = 0x400;
             cur_obj_play_sound_2(SOUND_GENERAL2_STAR_APPEARS);
         }
         if (o->oTimer > 70)
@@ -64,9 +63,7 @@ void bhv_grand_star_loop(void) {
             o->oInteractStatus = 0;
         }
     }
-    if (o->oAngleVelYaw > 0x400)
-        o->oAngleVelYaw -= 0x100;
-    o->oFaceAngleYaw += o->oAngleVelYaw;
+    o->oAnimState++;
     cur_obj_scale(2.0f);
     o->oGraphYOffset = 110.0f;
 }

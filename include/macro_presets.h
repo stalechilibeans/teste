@@ -15,7 +15,7 @@ struct MacroPreset
 struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvOneCoin, MODEL_YELLOW_COIN, 0},
-    {bhvMovingBlueCoin, MODEL_BLUE_COIN, 0},
+    {bhvMovingBlueCoin, MODEL_YELLOW_COIN, 0},
     {bhvBlueCoinSliding, MODEL_BLUE_COIN, 0}, // unused
     {bhvRedCoin, MODEL_RED_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
@@ -95,7 +95,7 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvExclamationBox, MODEL_EXCLAMATION_BOX, 9},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvBulletBill, MODEL_BULLET_BILL, 0}, // unused
-    {bhvHeaveHo, MODEL_HEAVE_HO, 0},
+    {bhvStaticObject, MODEL_NONE, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvThwomp2, MODEL_THWOMP, 0}, // unused
     {bhvFireSpitter, MODEL_BOWLING_BALL, 0},
@@ -119,11 +119,11 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
-    {bhvWoodenPost, MODEL_WOODEN_POST, 0},
+    {bhvStaticObject, MODEL_NONE, 0},
     {bhvWaterBombSpawner, MODEL_NONE, 0},
     {bhvEnemyLakitu, MODEL_ENEMY_LAKITU, 0},
-    {bhvKoopa, MODEL_KOOPA_WITH_SHELL, 2}, // unused
-    {bhvKoopaRaceEndpoint, MODEL_NONE, 0}, // unused
+    {bhvStaticObject, MODEL_NONE, 0}, // unused
+    {bhvStaticObject, MODEL_NONE, 0}, // unused
     {bhvBobomb, MODEL_BLACK_BOBOMB, 0},
     {bhvWaterBombCannon, MODEL_CANNON_BASE, 0}, // unused
     {bhvBobombBuddyOpensCannon, MODEL_BOBOMB_BUDDY, 0}, // unused
@@ -269,14 +269,14 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvPiranhaPlant, MODEL_PIRANHA_PLANT, 0}, // unused
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvSmallWhomp, MODEL_WHOMP, 0},
-    {bhvChainChomp, MODEL_CHAIN_CHOMP, 0},
+    {bhvStaticObject, MODEL_NONE, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
-    {bhvKoopa, MODEL_KOOPA_WITH_SHELL, 1},
-    {bhvKoopa, MODEL_KOOPA_WITHOUT_SHELL, 0}, // unused
-    {bhvWoodenPost, MODEL_WOODEN_POST, 0}, // unused
+    {bhvStaticObject, MODEL_NONE, 0},
+    {bhvStaticObject, MODEL_NONE, 0}, // unused
+    {bhvStaticObject, MODEL_NONE, 0}, // unused
     {bhvFirePiranhaPlant, MODEL_PIRANHA_PLANT, 0},
     {bhvFirePiranhaPlant, MODEL_PIRANHA_PLANT, 1}, // unused
-    {bhvKoopa, MODEL_KOOPA_WITH_SHELL, 4},
+    {bhvStaticObject, MODEL_NONE, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},

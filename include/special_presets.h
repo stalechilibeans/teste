@@ -31,7 +31,7 @@ static struct SpecialPreset SpecialObjectPresets[] =
     {0x03, SPTYPE_NO_YROT_OR_PARAMS , 0x00, MODEL_UNKNOWN_B8, bhvStaticObject},
     {0x04, SPTYPE_NO_YROT_OR_PARAMS , 0x00, MODEL_BOO, bhvCourtyardBooTriplet},
     {0x05, SPTYPE_NO_YROT_OR_PARAMS , 0x00, MODEL_UNKNOWN_AC, bhvCastleFloorTrap},
-    {0x06, SPTYPE_NO_YROT_OR_PARAMS , 0x00, MODEL_LLL_MOVING_OCTAGONAL_MESH_PLATFORM, bhvLllMovingOctagonalMeshPlatform},
+    {0x06, SPTYPE_NO_YROT_OR_PARAMS , 0x00, MODEL_NONE, bhvStaticObject},
     {0x07, SPTYPE_NO_YROT_OR_PARAMS , 0x00, MODEL_CCM_SNOWMAN_HEAD, bhvSnowBall},
     {0x08, SPTYPE_YROT_NO_PARAMS    , 0x00, MODEL_LLL_DRAWBRIDGE_PART, bhvLllDrawbridgeSpawner},
     {0x09, SPTYPE_NO_YROT_OR_PARAMS , 0x00, MODEL_NONE, bhvStaticObject},

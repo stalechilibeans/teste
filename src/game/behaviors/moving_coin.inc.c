@@ -17,7 +17,7 @@ static struct ObjectHitbox sMovingYellowCoinHitbox = {
 static struct ObjectHitbox sMovingBlueCoinHitbox = {
     /* interactType:      */ INTERACT_COIN,
     /* downOffset:        */ 0,
-    /* damageOrCoinValue: */ 5,
+    /* damageOrCoinValue: */ 1,
     /* health:            */ 0,
     /* numLootCoins:      */ 0,
     /* radius:            */ 100,
@@ -33,7 +33,6 @@ s32 coin_step(s16 *collisionFlagsPtr) {
 
     if ((*collisionFlagsPtr & 0x1) != 0 && (*collisionFlagsPtr & 0x8) == 0) /* bit 0, bit 3 */
     {
-        cur_obj_play_sound_2(SOUND_GENERAL_COIN_DROP);
         return 1;
     }
 
@@ -112,7 +111,7 @@ void bhv_moving_blue_coin_loop(void) {
 
     switch (o->oAction) {
         case MOV_BCOIN_ACT_STILL:
-            if (is_point_within_radius_of_mario(o->oPosX, o->oPosY, o->oPosZ, 1500))
+            if (is_point_within_radius_of_mario(o->oPosX, o->oPosY, o->oPosZ, 5000))
                 o->oAction = 1;
             break;
 
@@ -121,8 +120,6 @@ void bhv_moving_blue_coin_loop(void) {
             if ((collisionFlags & OBJ_COL_FLAG_GROUNDED)) /* bit 0 */
             {
                 o->oForwardVel += 25.0f;
-                if (!(collisionFlags & OBJ_COL_FLAG_NO_Y_VEL))
-                    cur_obj_play_sound_2(SOUND_GENERAL_COIN_DROP); /* bit 3 */
             } else
                 o->oForwardVel *= 0.98;
 

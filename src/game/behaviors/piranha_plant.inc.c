@@ -58,8 +58,6 @@ s32 piranha_plant_check_interactions(void) {
     return interacted;
 }
 
-#define PIRANHA_PLANT_SLEEP_MUSIC_PLAYING 0
-
 /**
  * Make the Piranha Plant sleep. If Mario moves too quickly, move the Piranha
  * Plant to the woken up state. Otherwise, play the lullaby if Mario is close
@@ -91,13 +89,8 @@ void piranha_plant_act_sleeping(void) {
         if (mario_moving_fast_enough_to_make_piranha_plant_bite()) {
             o->oAction = PIRANHA_PLANT_ACT_WOKEN_UP;
         }
-    } else if (o->oDistanceToMario < 1000.0f) {
-        play_secondary_music(SEQ_EVENT_PIRANHA_PLANT, 0, 255, 1000);
-        o->oPiranhaPlantSleepMusicState = PIRANHA_PLANT_SLEEP_MUSIC_PLAYING;
-    } else if (o->oPiranhaPlantSleepMusicState == PIRANHA_PLANT_SLEEP_MUSIC_PLAYING) {
-        o->oPiranhaPlantSleepMusicState++;
-        func_80321080(50);
     }
+
     piranha_plant_check_interactions();
 }
 
@@ -181,7 +174,7 @@ void piranha_plant_act_shrink_and_die(void) {
         o->oPiranhaPlantScale = o->oPiranhaPlantScale - 0.04;
     } else {
         o->oPiranhaPlantScale = 0.0f;
-        cur_obj_spawn_loot_blue_coin();
+        obj_spawn_loot_yellow_coins(o, 1, 20.0f);
         o->oAction = PIRANHA_PLANT_ACT_WAIT_TO_RESPAWN;
     }
 
@@ -291,7 +284,7 @@ s32 mario_moving_fast_enough_to_make_piranha_plant_bite(void) {
  */
 void piranha_plant_act_stopped_biting(void) {
     cur_obj_become_intangible();
-    cur_obj_init_animation_with_sound(6);
+    cur_obj_init_animation_with_sound(0);
 
     if (cur_obj_check_if_near_animation_end())
         o->oAction = PIRANHA_PLANT_ACT_SLEEPING;

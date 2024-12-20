@@ -199,17 +199,15 @@ void play_infinite_stairs_music(void) {
 }
 
 void set_background_music(u16 a, u16 seqArgs, s16 fadeTimer) {
-    if (gResetTimer == 0 && seqArgs != sCurrentMusic) {
+    if (gResetTimer == 0) {
         if (gCurrCreditsEntry != 0) {
             sound_reset(7);
         } else {
             sound_reset(a);
         }
 
-        if (!(gShouldNotPlayCastleMusic && seqArgs == SEQ_LEVEL_INSIDE_CASTLE)) {
-            play_music(SEQ_PLAYER_LEVEL, seqArgs, fadeTimer);
-            sCurrentMusic = seqArgs;
-        }
+        play_music(SEQ_PLAYER_LEVEL, seqArgs, fadeTimer);
+        sCurrentMusic = seqArgs;
     }
 }
 

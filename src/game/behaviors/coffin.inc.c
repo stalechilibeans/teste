@@ -17,8 +17,7 @@ struct LateralPosition {
  * Array of positions for all coffins relative to their spawner.
  */
 struct LateralPosition coffinRelativePos[] = {
-    { 412, -150 }, { 762, -150 }, { 1112, -150 },
-    { 412,  150 }, { 762,  150 }, { 1112,  150 },
+    { 412, -150 }, { 762, -150 }, { 1112, -150 }, { 412, 150 }, { 762, 150 }, { 1112, 150 },
 };
 
 /**
@@ -37,7 +36,7 @@ void bhv_coffin_spawner_loop(void) {
 
                 // Behavior param of 0 for all even i, 1 for all odd
                 coffin = spawn_object_relative(i & 1, coffinRelativePos[i].x, 0, relativeZ, o,
-                                              MODEL_BBH_WOODEN_TOMB, bhvCoffin);
+                                               MODEL_BBH_WOODEN_TOMB, bhvCoffin);
 
                 // Never true, game would enter a while(1) before it could.
                 // Possible a remnant of days this didn't happen.

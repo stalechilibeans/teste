@@ -76,9 +76,7 @@ void bhv_pyramid_top_explode(void) {
 
     // Generate 30 pyramid fragments with random properties.
     for (i = 0; i < 30; i++) {
-        pyramidFragment = spawn_object(
-            o, MODEL_DIRT_ANIMATION, bhvPyramidTopFragment
-        );
+        pyramidFragment = spawn_object(o, MODEL_DIRT_ANIMATION, bhvPyramidTopFragment);
         pyramidFragment->oForwardVel = random_float() * 50 + 80;
         pyramidFragment->oVelY = random_float() * 80 + 20;
         pyramidFragment->oMoveAngleYaw = random_u16();

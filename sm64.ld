@@ -24,7 +24,7 @@ OUTPUT_ARCH (mips)
 #define MIO0_SEG(name, segAddr) \
    BEGIN_SEG(name##_mio0, segAddr) \
    { \
-      BUILD_DIR/bin/name.mio0.o(.data); \
+      BUILD_DIR/bin/name.szp.o(.data); \
       . = ALIGN(0x10); \
    } \
    END_SEG(name##_mio0)
@@ -32,7 +32,7 @@ OUTPUT_ARCH (mips)
 #define MIO0_EU_SEG(name, segAddr) \
    BEGIN_SEG(name##_mio0, segAddr) \
    { \
-      BUILD_DIR/bin/eu/name.mio0.o(.data); \
+      BUILD_DIR/bin/eu/name.szp.o(.data); \
       . = ALIGN(0x10); \
    } \
    END_SEG(name##_mio0)
@@ -40,7 +40,7 @@ OUTPUT_ARCH (mips)
 #define STANDARD_LEVEL(name) \
    BEGIN_SEG(name##_segment_7, 0x07000000) \
    { \
-      BUILD_DIR/levels/name/leveldata.mio0.o(.data); \
+      BUILD_DIR/levels/name/leveldata.szp.o(.data); \
       . = ALIGN(0x10); \
    } \
    END_SEG(name##_segment_7) \
@@ -54,7 +54,7 @@ OUTPUT_ARCH (mips)
 #define STANDARD_OBJECTS(name, segAddr, geoAddr) \
    BEGIN_SEG(name##_mio0, segAddr) \
    { \
-      BUILD_DIR/actors/name.mio0.o(.data); \
+      BUILD_DIR/actors/name.szp.o(.data); \
       . = ALIGN(0x10); \
    } \
    END_SEG(name##_mio0) \
@@ -288,6 +288,7 @@ SECTIONS
       BUILD_DIR/libultra.a:osSetThreadPri.o(.text);
       BUILD_DIR/libultra.a:osInitialize.o(.text);
       BUILD_DIR/libultra.a:osViSwapBuffer.o(.text);
+      BUILD_DIR/libultra.a:__osGetCurrFaultedThread.o(.text);
       BUILD_DIR/libultra.a:sqrtf.o(.text);
       BUILD_DIR/libultra.a:osContStartReadData.o(.text);
       BUILD_DIR/libultra.a:osContInit.o(.text);
@@ -910,7 +911,7 @@ SECTIONS
    END_SEG(intro)
    BEGIN_SEG(intro_segment_7, 0x07000000)
    {
-      BUILD_DIR/levels/intro/leveldata.mio0.o(.data);
+      BUILD_DIR/levels/intro/leveldata.szp.o(.data);
       . = ALIGN(0x10);
    }
    END_SEG(intro_segment_7)
@@ -951,7 +952,7 @@ SECTIONS
    END_SEG(menu)
    BEGIN_SEG(menu_segment_7, 0x07000000)
    {
-      BUILD_DIR/levels/menu/leveldata.mio0.o(.data);
+      BUILD_DIR/levels/menu/leveldata.szp.o(.data);
       . = ALIGN(0x10);
    }
    END_SEG(menu_segment_7)

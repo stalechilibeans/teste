@@ -56,7 +56,8 @@ s8 sDebugSysCursor = 0;
 s8 sDebugInfoButtonSeqID = 0;
 s16 sDebugInfoButtonSeq[] = { U_CBUTTONS, L_CBUTTONS, D_CBUTTONS, R_CBUTTONS, -1 };
 
-// most likely present in an ifdef DEBUG build. TODO: check DD version?
+// These are from coin.c and door.c, they are both stubbed and just happened to have been right before
+// this file location wise. Kept here for convenience sake.
 void stub_debug_1(void) {
 }
 

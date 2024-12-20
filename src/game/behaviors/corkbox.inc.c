@@ -2,8 +2,6 @@
 // TODO: This split seems weird. Investigate further?
 
 void bhv_bobomb_bully_death_smoke_init(void) {
-    o->oPosY -= 300.0f;
-
     cur_obj_scale(10.0f);
 }
 

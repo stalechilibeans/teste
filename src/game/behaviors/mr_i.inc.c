@@ -112,7 +112,7 @@ void mr_i_act_3(void) {
                 spawn_default_star(1370, 2000.0f, -320.0f);
                 obj_mark_for_deletion(o);
             } else
-                cur_obj_spawn_loot_blue_coin();
+                obj_spawn_loot_yellow_coins(o, 1, 20.0f);
         }
         o->oMrISize -= 0.2 * sp1C;
         if (o->oMrISize < 0)
@@ -237,7 +237,7 @@ struct ObjectHitbox sMrIHitbox = {
     /* downOffset: */ 0,
     /* damageOrCoinValue: */ 2,
     /* health: */ 2,
-    /* numLootCoins: */ 5,
+    /* numLootCoins: */ 1,
     /* radius: */ 80,
     /* height: */ 150,
     /* hurtboxRadius: */ 0,

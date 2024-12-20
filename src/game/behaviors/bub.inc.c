@@ -28,8 +28,8 @@ void bub_spawner_act_3(void) {
     o->oAction = 0;
 }
 
-void (*sBirdChirpChirpActions[])(void) = { bub_spawner_act_0, bub_spawner_act_1,
-                                           bub_spawner_act_2, bub_spawner_act_3 };
+void (*sBirdChirpChirpActions[])(void) = { bub_spawner_act_0, bub_spawner_act_1, bub_spawner_act_2,
+                                           bub_spawner_act_3 };
 
 void bhv_bub_spawner_loop(void) {
     cur_obj_call_action_function(sBirdChirpChirpActions);

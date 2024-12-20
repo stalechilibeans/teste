@@ -128,8 +128,8 @@ extern u8 ttc_yellow_triangle[];
  * An array for converting a movtex texture id to a pointer that can
  * be passed to gDPSetTextureImage.
  */
-u8 *gMovtexIdToTexture[] = { texture_waterbox_water,     texture_waterbox_mist,
-                             texture_waterbox_jrb_water, texture_waterbox_unknown_water,
+u8 *gMovtexIdToTexture[] = { texture_waterbox_water,     NULL,
+                             texture_waterbox_jrb_water, NULL,
                              texture_waterbox_lava,      ssl_quicksand,
                              ssl_pyramid_sand,           ttc_yellow_triangle };
 
@@ -512,6 +512,7 @@ Gfx *movtex_gen_quads_id(s16 id, s16 y, void *movetexQuadsSegmented) {
     return NULL;
 }
 
+extern u8 waterSurf_01_01[];
 extern u8 bbh_movtex_merry_go_round_water_entrance[];
 extern u8 bbh_movtex_merry_go_round_water_side[];
 extern u8 ccm_movtex_penguin_puddle_water[];
@@ -542,6 +543,8 @@ extern u8 ttm_movtex_puddle[];
  */
 void *get_quad_collection_from_id(u32 id) {
     switch (id) {
+        case CASTLE_MOVTEX_WATER:
+            return waterSurf_01_01;
         case BBH_MOVTEX_MERRY_GO_ROUND_WATER_ENTRANCE:
             return bbh_movtex_merry_go_round_water_entrance;
         case BBH_MOVTEX_MERRY_GO_ROUND_WATER_SIDE:

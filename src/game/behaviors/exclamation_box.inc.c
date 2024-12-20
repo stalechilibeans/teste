@@ -42,7 +42,7 @@ void exclamation_box_act_0(void) {
             || ((o->oBehParams >> 24) & 0xFF) != 0)
             o->oAction = 2;
         else
-            o->oAction = 1;
+            o->oAction = 2;
     } else {
         o->oAnimState = 3;
         o->oAction = 2;

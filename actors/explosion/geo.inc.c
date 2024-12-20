@@ -1,19 +1,25 @@
-// 0x16000040
-const GeoLayout explosion_geo[] = {
-   GEO_NODE_START(),
-   GEO_OPEN_NODE(),
-      GEO_SWITCH_CASE(9, geo_switch_anim_state),
-      GEO_OPEN_NODE(),
-         GEO_DISPLAY_LIST(LAYER_TRANSPARENT, explosion_seg3_dl_03004298),
-         GEO_DISPLAY_LIST(LAYER_TRANSPARENT, explosion_seg3_dl_03004298),
-         GEO_DISPLAY_LIST(LAYER_TRANSPARENT, explosion_seg3_dl_030042B0),
-         GEO_DISPLAY_LIST(LAYER_TRANSPARENT, explosion_seg3_dl_030042B0),
-         GEO_DISPLAY_LIST(LAYER_TRANSPARENT, explosion_seg3_dl_030042C8),
-         GEO_DISPLAY_LIST(LAYER_TRANSPARENT, explosion_seg3_dl_030042E0),
-         GEO_DISPLAY_LIST(LAYER_TRANSPARENT, explosion_seg3_dl_030042F8),
-         GEO_DISPLAY_LIST(LAYER_TRANSPARENT, explosion_seg3_dl_03004310),
-         GEO_DISPLAY_LIST(LAYER_TRANSPARENT, explosion_seg3_dl_03004328),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-   GEO_END(),
+/********************************************************************************
+	RCP_HmsItembombfire
+														[ October 18, 1995 ]
+ ********************************************************************************/
+
+/********************************************************************************/
+/*	Hierarchy map data.															*/
+/********************************************************************************/
+
+Hierarchy RCP_HmsItembombfire[] = { 
+	hmsGroup()		
+	hmsBegin()
+		hmsSelect(7, ControlShapeAnime)
+		hmsBegin()
+			hmsGfx(RM_SPRITE, RCP_bombfire1)
+			hmsGfx(RM_SPRITE, RCP_bombfire2)
+			hmsGfx(RM_SPRITE, RCP_bombfire3)
+			hmsGfx(RM_SPRITE, RCP_bombfire4)
+			hmsGfx(RM_SPRITE, RCP_bombfire5)
+			hmsGfx(RM_SPRITE, RCP_bombfire6)
+			hmsGfx(RM_SPRITE, RCP_bombfire7)
+		hmsEnd()
+	hmsEnd()
+  	hmsExit()
 };

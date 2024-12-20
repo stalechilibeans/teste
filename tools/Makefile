@@ -36,7 +36,9 @@ extract_data_for_mio_CFLAGS := -O2
 skyconv_SOURCES := skyconv.c n64graphics.c utils.c
 skyconv_CFLAGS := -O2 -lm
 
-all: $(PROGRAMS)
+all-except-recomp: $(PROGRAMS)
+
+all: all-except-recomp ido5.3_recomp
 
 clean:
 	$(RM) $(PROGRAMS)
@@ -46,4 +48,9 @@ $(1): $($1_SOURCES)
 	$(CC) $(CFLAGS) $$^ -lm -o $$@ $($1_CFLAGS)
 endef
 
+ido5.3_recomp:
+	$(MAKE) -C ido5.3_recomp
+
 $(foreach p,$(PROGRAMS),$(eval $(call COMPILE,$(p))))
+
+.PHONY: all all-except-recomp clean default ido5.3_recomp

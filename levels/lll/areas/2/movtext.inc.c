@@ -1,15 +1,15 @@
 // 0x0702874C - 0x070287A8
 Movtex lll_movtex_tris_lava_floor[] = {
-    MOV_TEX_SPD(     1),
-    MOV_TEX_TRIS( 8191, 0,  8192, 0, 0),
-    MOV_TEX_TRIS(    0, 0,  8192, 0, 2),
-    MOV_TEX_TRIS(-8191, 0,  8192, 0, 4),
-    MOV_TEX_TRIS( 8191, 0,     0, 2, 0),
-    MOV_TEX_TRIS(    0, 0,     0, 2, 2),
-    MOV_TEX_TRIS(-8191, 0,     0, 2, 4),
-    MOV_TEX_TRIS( 8191, 0, -8192, 4, 0),
-    MOV_TEX_TRIS(    0, 0, -8192, 4, 2),
-    MOV_TEX_TRIS(-8191, 0, -8192, 4, 4),
+    MOV_TEX_SPD(     0),
+    MOV_TEX_TRIS( 8191, 0,  8192, 0,   0),
+    MOV_TEX_TRIS(    0, 0,  8192, 0,  16),
+    MOV_TEX_TRIS(-8191, 0,  8192, 0,  64),
+    MOV_TEX_TRIS( 8191, 0,     0, 16,  0),
+    MOV_TEX_TRIS(    0, 0,     0, 16, 16),
+    MOV_TEX_TRIS(-8191, 0,     0, 16, 64),
+    MOV_TEX_TRIS( 8191, 0, -8192, 64,  0),
+    MOV_TEX_TRIS(    0, 0, -8192, 64, 16),
+    MOV_TEX_TRIS(-8191, 0, -8192, 64, 64),
 };
 
 // 0x070287A8 - 0x070287F0

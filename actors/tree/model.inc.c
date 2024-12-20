@@ -18,16 +18,16 @@ ALIGNED8 static const u8 tree_seg3_texture_0302EE28[] = {
 
 // 0x0302FE28
 static const Vtx tree_seg3_vertex_0302FE28[] = {
-    {{{  -356,     -9,      0}, 0, {  -796,   2012}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{  -356,     -9,      0}, 0, {  -200,   2012}, {0xff, 0xff, 0xff, 0xff}}},
     {{{     0,     -9,      0}, 0, {   990,   2012}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{     0,    800,      0}, 0, {   990,   -712}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     0,    820,      0}, 0, {   990,   -504}, {0xff, 0xff, 0xff, 0xff}}},
 };
 
 // 0x0302FE58
 static const Vtx tree_seg3_vertex_0302FE58[] = {
     {{{     0,     -9,      0}, 0, {     0,   2012}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{   358,     -9,      0}, 0, {  1756,   2012}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{     0,    800,      0}, 0, {     0,   -712}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{   358,     -9,      0}, 0, {  1160,   2012}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     0,    820,      0}, 0, {     0,   -504}, {0xff, 0xff, 0xff, 0xff}}},
 };
 
 // 0x0302FE88 - 0x0302FEB8
@@ -54,7 +54,6 @@ const Gfx tree_seg3_dl_0302FEB8[] = {
 const Gfx tree_seg3_dl_0302FEE8[] = {
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_DECALRGBA, G_CC_DECALRGBA),
-    gsSPClearGeometryMode(G_LIGHTING),
     gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_WRAP | G_TX_NOMIRROR, G_TX_NOMASK, G_TX_NOLOD, G_TX_WRAP | G_TX_NOMIRROR, G_TX_NOMASK, G_TX_NOLOD),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPTileSync(),
@@ -65,7 +64,6 @@ const Gfx tree_seg3_dl_0302FEE8[] = {
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_OFF),
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
-    gsSPSetGeometryMode(G_LIGHTING),
     gsSPEndDisplayList(),
 };
 

@@ -1,20 +1,61 @@
-# Super Mario 64
+# The Preservation Project
 
-This repo contains a full decompilation of Super Mario 64 (J), (U), and (E).
-The source and data have been decompiled but complete naming and documentation
-all of the code and data is still a work in progress. Decompiling the Shindou ROM
-is also an ongoing effort.
+This repo contains a modified decompilation of Super Mario 64 which aims to recreate the SpaceWorld 1995 build.
 
-It builds the following ROMs:
+As of June 2022, The Preservation Project has become an open source project, meaning the community can contribute to it to make it a perpetually improving recreation.
 
-* sm64.jp.z64 `sha1: 8a20a5c83d6ceb0f0506cfc9fa20d8f438cafe51`
-* sm64.us.z64 `sha1: 9bef1128717f958171a4afac3ed78ee2bb4e86ce`
-* sm64.eu.z64 `sha1: 4ac5721683d0e0b6bbb561b58a71740845dceea9`
+Please create any issues you find and feel free to pull request, any contributions are appreciated.
 
-This repo does not include all assets necessary for compiling the ROMs.
-A prior copy of the game is required to extract the required assets.
+Original assets, to-do lists and more can soon be found in a special repository.
+
+# Credits
+
+**Fluvian (Programming)**
+
+**Marionova (Programming)**
+
+**EmmaNerd (Art & Sound)**
+
+**CDi-Fails (Art & Models)**
+
+**Lurondor (Art & Models)**
+
+**Robichu (Art & Models)**
+
+**Zucchino (Art & Models)**
+
+**Xiartic (Research & Playtesting)**
+
+**Original Super Mario 64 Decompilation Team**
 
 ## Installation
+
+### Docker
+
+#### 1. Copy baserom(s) for asset extraction
+
+For each version (jp/us/eu) that you want to build a ROM for, put an existing ROM at
+`./baserom.<version>.z64` for asset extraction.
+
+#### 2. Create docker image
+
+```bash
+docker build -t sm64 .
+```
+
+#### 3. Build
+
+To build we simply have to mount our local filesystem into the docker container and build.
+
+```bash
+# for example if you have baserom.us.z64 in the project root
+docker run --rm --mount type=bind,source="$(pwd)",destination=/sm64 sm64 make VERSION=us -j4
+
+# if your host system is linux you need to tell docker what user should own the output files
+docker run --rm --mount type=bind,source="$(pwd)",destination=/sm64 --user $UID:$UID sm64 make VERSION=us -j4
+```
+
+Resulting artifacts can be found in the `build` directory.
 
 ### Linux
 
@@ -29,11 +70,11 @@ The build system has the following package requirements:
  * binutils-mips >= 2.27
  * python3 >= 3.6
  * libaudiofile
- * qemu-irix
+ * libcapstone-dev
 
 __Debian / Ubuntu__
 ```
-sudo apt install build-essential pkg-config git binutils-mips-linux-gnu python3 zlib1g-dev libaudiofile-dev
+sudo apt install build-essential pkg-config git binutils-mips-linux-gnu python3 zlib1g-dev libaudiofile-dev libcapstone-dev
 ```
 
 Download latest package from [qemu-irix Releases](https://github.com/n64decomp/qemu-irix/releases)
@@ -105,12 +146,3 @@ sm64
 ├── textures: skybox and generic texture data
 └── tools: build tools
 ```
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to
-discuss what you would like to change.
-
-Run clang-format on your code to ensure it meets the project's coding standards.
-
-Official Discord: https://discord.gg/27JtCWs

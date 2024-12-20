@@ -112,14 +112,14 @@ void print_intro_text(void) {
 #ifdef VERSION_EU
             print_text_centered(160, 20, gNoControllerMsg[language]);
 #else
-            print_text_centered(160, 20, "NO CONTROLLER");
+            print_text_centered(160, 20 + 10, "NO CONTROLLER");
 #endif
         } else {
 #ifdef VERSION_EU
             print_text(20, 20, "START");
 #else
-            print_text_centered(60, 38, "PRESS");
-            print_text_centered(60, 20, "START");
+            print_text_centered(60, 38 + 10, "PRESS");
+            print_text_centered(60, 20 + 10, "START");
 #endif
         }
     }
@@ -366,6 +366,7 @@ void render_game(void) {
 
         gDPSetScissor(gDisplayListHead++, G_SC_NON_INTERLACE, 0, BORDER_HEIGHT, SCREEN_WIDTH,
                       SCREEN_HEIGHT - BORDER_HEIGHT);
+        gPauseScreenMode = render_menus_and_dialogs();
         render_hud();
 
         gDPSetScissor(gDisplayListHead++, G_SC_NON_INTERLACE, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -374,7 +375,6 @@ void render_game(void) {
         print_displaying_credits_entry();
         gDPSetScissor(gDisplayListHead++, G_SC_NON_INTERLACE, 0, BORDER_HEIGHT, SCREEN_WIDTH,
                       SCREEN_HEIGHT - BORDER_HEIGHT);
-        gPauseScreenMode = render_menus_and_dialogs();
 
         if (gPauseScreenMode != 0) {
             gSaveOptSelectIndex = gPauseScreenMode;

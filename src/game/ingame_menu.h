@@ -105,6 +105,8 @@ enum DialogSpecialChars {
     DIALOG_CHAR_TERMINATOR = 0xFF
 };
 
+extern s8 gDialogBoxState;
+extern f32 gDialogBoxOpenTimer;
 extern s32 gDialogResponse;
 extern u16 gDialogColorFadeTimer;
 extern s8 gLastDialogLineNum;

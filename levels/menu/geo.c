@@ -7,6 +7,7 @@
 #include "game/camera.h"
 #include "game/moving_texture.h"
 #include "game/screen_transition.h"
+#include "game/areamap.h"
 #include "game/paintings.h"
 #include "menu/file_select.h"
 #include "menu/star_select.h"

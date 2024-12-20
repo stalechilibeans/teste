@@ -16,25 +16,37 @@ void fish_act_spawn(void) {
     struct Animation **fishAnimation;
     struct Object *fishObject;
     switch (o->oBehParams2ndByte) {
-        
+
         // Blue fish with a quanitiy of twenty.
         case 0:
-            model = MODEL_FISH;    schoolQuantity = 20;    minDistToMario = 1500.0f;    fishAnimation = blue_fish_seg3_anims_0301C2B0;
+            model = MODEL_FISH;
+            schoolQuantity = 20;
+            minDistToMario = 1500.0f;
+            fishAnimation = blue_fish_seg3_anims_0301C2B0;
             break;
-            
+
         // Blue fish with a quanitiy of five.
         case 1:
-            model = MODEL_FISH;    schoolQuantity = 5;    minDistToMario = 1500.0f;    fishAnimation = blue_fish_seg3_anims_0301C2B0;
+            model = MODEL_FISH;
+            schoolQuantity = 5;
+            minDistToMario = 1500.0f;
+            fishAnimation = blue_fish_seg3_anims_0301C2B0;
             break;
-            
+
         // Cyan fish with a quanitiy of twenty.
         case 2:
-            model = MODEL_CYAN_FISH;    schoolQuantity = 20;    minDistToMario = 1500.0f;    fishAnimation = cyan_fish_seg6_anims_0600E264;
+            model = MODEL_CYAN_FISH;
+            schoolQuantity = 20;
+            minDistToMario = 1500.0f;
+            fishAnimation = cyan_fish_seg6_anims_0600E264;
             break;
-            
+
         // Cyan fish with a quanitiy of five.
         case 3:
-            model = MODEL_CYAN_FISH;    schoolQuantity = 5;    minDistToMario = 1500.0f;    fishAnimation = cyan_fish_seg6_anims_0600E264;
+            model = MODEL_CYAN_FISH;
+            schoolQuantity = 5;
+            minDistToMario = 1500.0f;
+            fishAnimation = cyan_fish_seg6_anims_0600E264;
             break;
     }
     /**
@@ -75,9 +87,7 @@ void fish_act_init(void) {
 /**
  * An array of action methods chosen one at a time by bhv_fish_loop
  */
-void (*sFishActions[])(void) = {
-    fish_act_spawn,    fish_act_respawn,    fish_act_init 
-};
+void (*sFishActions[])(void) = { fish_act_spawn, fish_act_respawn, fish_act_init };
 
 void bhv_large_fish_group_loop(void) {
     cur_obj_call_action_function(sFishActions);
@@ -90,17 +100,17 @@ void bhv_large_fish_group_loop(void) {
 void fish_regroup(s32 speed) {
     // Store parentY for calculating when the fish should move towards oFishPosY.
     f32 parentY = o->parentObj->oPosY;
-    
-    // Sets speed of fish in SA to a leisurely speed of 10 when close to other fish. 
+
+    // Sets speed of fish in SA to a leisurely speed of 10 when close to other fish.
     if (gCurrLevelNum == LEVEL_SA) {
         if (500.0f < absf(o->oPosY - o->oFishPosY)) {
             speed = 10;
         }
         // Applies movement to fish.
         o->oPosY = approach_f32_symmetric(o->oPosY, o->oFishPosY, speed);
-    /**
-     * Brings fish Y coordinate towards another fish if they are too far apart.
-     */
+        /**
+         * Brings fish Y coordinate towards another fish if they are too far apart.
+         */
     } else if (parentY - 100.0f - o->oFishDepthDistance < o->oPosY
                && o->oPosY < parentY + 1000.0f + o->oFishDepthDistance) {
         o->oPosY = approach_f32_symmetric(o->oPosY, o->oFishPosY, speed);
@@ -111,14 +121,14 @@ void fish_regroup(s32 speed) {
  */
 void fish_group_act_rotation(void) {
     f32 fishY = o->oPosY - gMarioObject->oPosY;
-    
+
     // Alters speed of animation for natural movement.
     if (o->oTimer < 10) {
         cur_obj_init_animation_with_accel_and_sound(0, 2.0f);
     } else {
         cur_obj_init_animation_with_accel_and_sound(0, 1.0f);
     }
-    
+
     /**
      * Assigns oForwardVel, oFishRandomOffset, & oFishRespawnDistance to a random floats.
      * Determines fish movement.
@@ -132,11 +142,11 @@ void fish_group_act_rotation(void) {
         }
         o->oFishRespawnDistance = random_float() * 500 + 200.0f;
     }
-    
+
     // Interact with Mario through rotating towards him.
     o->oFishPosY = gMarioObject->oPosY + o->oFishRandomOffset;
     cur_obj_rotate_yaw_toward(o->oAngleToMario, 0x400);
-    
+
     // If fish groups are too close, call fish_regroup()
     if (o->oPosY < o->oFishWaterLevel - 50.0f) {
         if (fishY < 0.0f) {
@@ -153,7 +163,7 @@ void fish_group_act_rotation(void) {
             o->oPosY = o->oPosY - 1.0f;
         }
     }
-    
+
     /**
      * Delete current fish and create a new one if distance to Mario is
      * smaller than his distance to oFishRespawnDistance + 150.0f.
@@ -232,15 +242,13 @@ void fish_group_act_animate(void) {
     o->oAction = FISH_ACT_ACTIVE;
 }
 
-void (*sFishGroupActions[])(void) = { 
-    fish_group_act_animate,    fish_group_act_rotation,    fish_group_act_move
-};
+void (*sFishGroupActions[])(void) = { fish_group_act_animate, fish_group_act_rotation,
+                                      fish_group_act_move };
 
 /**
  * Main loop for fish
  */
-void bhv_fish_loop(void)
-{
+void bhv_fish_loop(void) {
     UNUSED s32 unused[4];
     cur_obj_scale(1.0f);
 
@@ -253,26 +261,26 @@ void bhv_fish_loop(void)
     if (gCurrLevelNum == LEVEL_SA) {
         o->oFishWaterLevel = 0.0f;
     }
-    // Apply hitbox and resolve wall collisions 
+    // Apply hitbox and resolve wall collisions
     o->oWallHitboxRadius = 30.0f;
     cur_obj_resolve_wall_collisions();
-    
+
     // Delete fish below the water depth bounds of -10000.0f.
     if (gCurrLevelNum != LEVEL_UNKNOWN_32) {
         if (o->oFishWaterLevel < -10000.0f) {
             obj_mark_for_deletion(o);
             return;
         }
-        
-    // Unreachable code, perhaps for debugging or testing.
+
+        // Unreachable code, perhaps for debugging or testing.
     } else {
         o->oFishWaterLevel = 1000.0f;
     }
-    
+
     // Call fish action methods and apply physics engine.
     cur_obj_call_action_function(sFishGroupActions);
     cur_obj_move_using_fvel_and_gravity();
-    
+
     // If the parent object has action set to two, then delete the fish object.
     if (o->parentObj->oAction == FISH_ACT_RESPAWN) {
         obj_mark_for_deletion(o);

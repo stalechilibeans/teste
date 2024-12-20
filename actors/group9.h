@@ -4,11 +4,8 @@
 #include "types.h"
 
 // boo
-extern const GeoLayout boo_geo[];
-extern const Gfx boo_seg5_dl_0500BEE0[];
-extern const Gfx boo_seg5_dl_0500BF48[];
-extern const Gfx boo_seg5_dl_0500BFA0[];
-extern const Gfx boo_seg5_dl_0500C1B0[];
+extern const GeoLayout RCP_HmsEnemyTeresa[];
+extern const Gfx gfx_teresa[];
 
 // book
 extern const GeoLayout bookend_geo[];
@@ -60,17 +57,10 @@ extern const Gfx haunted_cage_seg5_dl_0500FFF0[];
 extern const Gfx haunted_cage_seg5_dl_05010100[];
 
 // mad_piano
-extern const GeoLayout mad_piano_geo[];
-extern const Gfx mad_piano_seg5_dl_05008B68[];
-extern const Gfx mad_piano_seg5_dl_05008BD0[];
-extern const Gfx mad_piano_seg5_dl_05008CB0[];
-extern const Gfx mad_piano_seg5_dl_05009590[];
-extern const Gfx mad_piano_seg5_dl_050096C8[];
-extern const Gfx mad_piano_seg5_dl_050097B0[];
-extern const Gfx mad_piano_seg5_dl_050097F8[];
-extern const Gfx mad_piano_seg5_dl_05009840[];
-extern const Gfx mad_piano_seg5_dl_05009888[];
-extern const Gfx mad_piano_seg5_dl_050098E8[];
+extern GeoLayout RCP_HmsEnemypiano_base_data[];
+extern Gfx RCP_piano_base_data0[];
+extern Gfx RCP_piano_base_data1[];
+extern Gfx RCP_piano_base_data2[];
 extern const struct Animation *const mad_piano_seg5_anims_05009B14[];
 
 // small_key

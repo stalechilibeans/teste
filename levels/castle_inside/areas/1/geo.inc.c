@@ -49,7 +49,7 @@ const GeoLayout castle_geo_000FD0[] = {
       GEO_DISPLAY_LIST(LAYER_OPAQUE, inside_castle_seg7_dl_07032FC0),
       GEO_DISPLAY_LIST(LAYER_ALPHA, inside_castle_seg7_dl_07033158),
       GEO_ASM(  0, geo_painting_update),
-      GEO_ASM(PAINTING_ID(0, 1), geo_painting_draw),
+      GEO_ASM(PAINTING_ID(1, 1), geo_painting_draw),
    GEO_CLOSE_NODE(),
    GEO_RETURN(),
 };
@@ -62,7 +62,7 @@ const GeoLayout castle_geo_001000[] = {
       GEO_DISPLAY_LIST(LAYER_ALPHA, inside_castle_seg7_dl_07035178),
       GEO_DISPLAY_LIST(LAYER_ALPHA, inside_castle_seg7_dl_07035288),
       GEO_ASM(  0, geo_painting_update),
-      GEO_ASM(PAINTING_ID(2, 1), geo_painting_draw),
+      GEO_ASM(PAINTING_ID(4, 1), geo_painting_draw),
    GEO_CLOSE_NODE(),
    GEO_RETURN(),
 };
@@ -92,7 +92,7 @@ const GeoLayout castle_geo_001088[] = {
       GEO_DISPLAY_LIST(LAYER_OPAQUE, inside_castle_seg7_dl_070234C0),
       GEO_DISPLAY_LIST(LAYER_OPAQUE, inside_castle_seg7_dl_07023520),
       GEO_ASM(  0, geo_painting_update),
-      GEO_ASM(PAINTING_ID(1, 1), geo_painting_draw),
+      GEO_ASM(PAINTING_ID(2, 1), geo_painting_draw),
    GEO_CLOSE_NODE(),
    GEO_RETURN(),
 };

@@ -1,320 +1,323 @@
-// 0x160003A8
-const GeoLayout castle_door_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 3500),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03013E28),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(3500, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03014100),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+/********************************************************************************
+		RCP_FarMainDoor and RCP_NearMainDoor
+														[ Jun 16, 1996 ]
+*********************************************************************************/
+
+/* ====================================================================================	
+		: RCP_HmsMainDoor
+======================================================================================= */
+Hierarchy RCP_HmsMainDoor[] = {
+ hmsTrans(78,0,0)
+ hmsBegin()
+ hmsScale(0.25f)
+    hmsBegin()
+      hmsJoint(RM_SURF,NULL,-300,0,0)  /* chn19(3) */
+      hmsBegin()
+			hmsBegin()
+				hmsLOD(-2048,2000)
+				hmsBegin()
+					hmsJoint(RM_SURF, RCP_NearMainDoor, 0,0,0)
+				hmsEnd()
+				hmsLOD(2000,32767)
+				hmsBegin()
+					hmsJoint(RM_SURF, RCP_FarMainDoor, 0,0,0)
+				hmsEnd()
+			hmsEnd()
+            hmsJoint(RM_SURF,NULL,0,0,0)	  	/* sphere2(1) */
+            hmsJoint(RM_SURF,NULL,0,0,0)  		/* sphere1(0) */
+         hmsEnd()
+      hmsEnd()
+   hmsEnd()
+ hmsEnd()
+ hmsExit()
 };
 
-// 0x1600043C
-const GeoLayout cabin_door_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 3500),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03013EA8),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(3500, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03014128),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+/* ====================================================================================	
+		: RCP_HmsMainroomDoorA
+======================================================================================= */
+Hierarchy RCP_HmsMainroomDoorA[] = {
+ hmsTrans(78,0,0)
+ hmsBegin()
+ hmsScale(0.25f)
+    hmsBegin()
+      hmsJoint(RM_SURF,NULL,-300,0,0)  /* chn19(3) */
+      hmsBegin()
+			hmsBegin()
+				hmsLOD(-2048,2000)
+				hmsBegin()
+					hmsJoint(RM_SURF  , RCP_NearMainDoor  , 0,0,0)
+					hmsBegin()
+						hmsGfx(RM_XDECAL, RCP_mainroom_doorA)
+					hmsEnd()
+				hmsEnd()
+				hmsLOD(2000,32767)
+				hmsBegin()
+					hmsJoint(RM_SURF  , RCP_FarMainDoor   , 0,0,0)
+					hmsBegin()
+						hmsGfx(RM_XDECAL, RCP_mainroom_doorA)
+					hmsEnd()
+				hmsEnd()
+			hmsEnd()
+            hmsJoint(RM_SURF,NULL,0,0,0)	  	/* sphere2(1) */
+            hmsJoint(RM_SURF,NULL,0,0,0)  		/* sphere1(0) */
+         hmsEnd()
+      hmsEnd()
+   hmsEnd()
+ hmsEnd()
+ hmsExit()
 };
 
-// 0x160004D0
-const GeoLayout wooden_door_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 3500),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03014A80),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(3500, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03014F98),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+/* ====================================================================================	
+		: RCP_HmsMainroomDoorB
+======================================================================================= */
+Hierarchy RCP_HmsMainroomDoorB[] = {
+ hmsTrans(78,0,0)
+ hmsBegin()
+ hmsScale(0.25f)
+    hmsBegin()
+      hmsJoint(RM_SURF,NULL,-300,0,0)  /* chn19(3) */
+      hmsBegin()
+			hmsBegin()
+				hmsLOD(-2048,2000)
+				hmsBegin()
+					hmsJoint(RM_SURF  , RCP_NearMainDoor  , 0,0,0)
+					hmsBegin()
+						hmsGfx(RM_XDECAL, RCP_mainroom_doorB)
+					hmsEnd()
+				hmsEnd()
+				hmsLOD(2000,32767)
+				hmsBegin()
+					hmsJoint(RM_SURF  , RCP_FarMainDoor   , 0,0,0)
+					hmsBegin()
+						hmsGfx(RM_XDECAL, RCP_mainroom_doorB)
+					hmsEnd()
+				hmsEnd()
+			hmsEnd()
+            hmsJoint(RM_SURF,NULL,0,0,0)	  	/* sphere2(1) */
+            hmsJoint(RM_SURF,NULL,0,0,0)  		/* sphere1(0) */
+         hmsEnd()
+      hmsEnd()
+   hmsEnd()
+ hmsEnd()
+ hmsExit()
 };
 
-// 0x16000564
-const GeoLayout wooden_door2_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 3500),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03014B30),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(3500, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03015008),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+/* ====================================================================================	
+		: RCP_HmsMainroomDoorC
+======================================================================================= */
+Hierarchy RCP_HmsMainroomDoorC[] = {
+ hmsTrans(78,0,0)
+ hmsBegin()
+ hmsScale(0.25f)
+    hmsBegin()
+      hmsJoint(RM_SURF,NULL,-300,0,0)  /* chn19(3) */
+      hmsBegin()
+			hmsBegin()
+				hmsLOD(-2048,2000)
+				hmsBegin()
+					hmsJoint(RM_SURF  , RCP_NearMainDoor  , 0,0,0)
+					hmsBegin()
+						hmsGfx(RM_XDECAL, RCP_mainroom_doorC)
+					hmsEnd()
+				hmsEnd()
+				hmsLOD(2000,32767)
+				hmsBegin()
+					hmsJoint(RM_SURF  , RCP_FarMainDoor   , 0,0,0)
+					hmsBegin()
+						hmsGfx(RM_XDECAL, RCP_mainroom_doorC)
+					hmsEnd()
+				hmsEnd()
+			hmsEnd()
+            hmsJoint(RM_SURF,NULL,0,0,0)	  	/* sphere2(1) */
+            hmsJoint(RM_SURF,NULL,0,0,0)  		/* sphere1(0) */
+         hmsEnd()
+      hmsEnd()
+   hmsEnd()
+ hmsEnd()
+ hmsExit()
 };
 
-// 0x160005F8
-const GeoLayout metal_door_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 3500),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03014BE0),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(3500, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03015078),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+/* ====================================================================================	
+		: RCP_HmsMainroomDoorD
+======================================================================================= */
+Hierarchy RCP_HmsMainroomDoorD[] = {
+ hmsTrans(78,0,0)
+ hmsBegin()
+ hmsScale(0.25f)
+    hmsBegin()
+      hmsJoint(RM_SURF,NULL,-300,0,0)  /* chn19(3) */
+      hmsBegin()
+			hmsBegin()
+				hmsLOD(-2048,2000)
+				hmsBegin()
+					hmsJoint(RM_SURF  , RCP_NearMainDoor  , 0,0,0)
+					hmsBegin()
+						hmsGfx(RM_XDECAL, RCP_mainroom_doorD)
+					hmsEnd()
+				hmsEnd()
+				hmsLOD(2000,32767)
+				hmsBegin()
+					hmsJoint(RM_SURF  , RCP_FarMainDoor   , 0,0,0)
+					hmsBegin()
+						hmsGfx(RM_XDECAL, RCP_mainroom_doorD)
+					hmsEnd()
+				hmsEnd()
+			hmsEnd()
+            hmsJoint(RM_SURF,NULL,0,0,0)	  	/* sphere2(1) */
+            hmsJoint(RM_SURF,NULL,0,0,0)  		/* sphere1(0) */
+         hmsEnd()
+      hmsEnd()
+   hmsEnd()
+ hmsEnd()
+ hmsExit()
 };
 
-// 0x1600068C
-const GeoLayout hazy_maze_door_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 3500),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03014C90),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(3500, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_030150E8),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+
+/* --------------------------------------------------------------------------------------------	*/
+/* --------------------------------------------------------------------------------------------	*/
+
+
+/* ====================================================================================	
+		: RCP_HmsDoor1
+======================================================================================= */
+Hierarchy RCP_HmsDoor1[] = {
+ hmsTrans(78,0,0)
+ hmsBegin()
+ hmsScale(0.25f)
+    hmsBegin()
+      hmsJoint(RM_SURF,NULL,-300,0,0)  /* chn19(3) */
+      hmsBegin()
+			hmsBegin()
+				hmsLOD(-2048,2000)
+				hmsBegin()
+					hmsJoint(RM_SURF, gfx_door1, 0,0,0)
+				hmsEnd()
+				hmsLOD(2000,32767)
+				hmsBegin()
+					hmsJoint(RM_SURF, gfx_door1_far, 0,0,0)
+				hmsEnd()
+			hmsEnd()
+            hmsJoint(RM_SURF,NULL,0,0,0)	  	/* sphere2(1) */
+            hmsJoint(RM_SURF,NULL,0,0,0)  		/* sphere1(0) */
+         hmsEnd()
+      hmsEnd()
+   hmsEnd()
+ hmsEnd()
+ hmsExit()
 };
 
-// 0x16000720
-const GeoLayout haunted_door_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 3500),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03014D40),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(3500, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03015158),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+/* ====================================================================================	
+		: RCP_HmsDoor2
+======================================================================================= */
+Hierarchy RCP_HmsDoor2[] = {
+ hmsTrans(78,0,0)
+ hmsBegin()
+ hmsScale(0.25f)
+    hmsBegin()
+      hmsJoint(RM_SURF,NULL,-300,0,0)  /* chn19(3) */
+      hmsBegin()
+			hmsBegin()
+				hmsLOD(-2048,2000)
+				hmsBegin()
+					hmsJoint(RM_SURF, gfx_door2, 0,0,0)
+				hmsEnd()
+				hmsLOD(2000,32767)
+				hmsBegin()
+					hmsJoint(RM_SURF, gfx_door2_far, 0,0,0)
+				hmsEnd()
+			hmsEnd()
+            hmsJoint(RM_SURF,NULL,0,0,0)	  	/* sphere2(1) */
+            hmsJoint(RM_SURF,NULL,0,0,0)  		/* sphere1(0) */
+         hmsEnd()
+      hmsEnd()
+   hmsEnd()
+ hmsEnd()
+ hmsExit()
 };
 
-// 0x160007B4
-const GeoLayout castle_door_0_star_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 1000),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03013E28),
-                  GEO_OPEN_NODE(),
-                     GEO_DISPLAY_LIST(LAYER_TRANSPARENT, door_seg3_dl_03014250),
-                  GEO_CLOSE_NODE(),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(1000, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03013E28),
-                  GEO_OPEN_NODE(),
-                     GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, door_seg3_dl_03014280),
-                  GEO_CLOSE_NODE(),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+/* ====================================================================================	
+		: RCP_HmsDoor3
+======================================================================================= */
+Hierarchy RCP_HmsDoor3[] = {
+ hmsTrans(78,0,0)
+ hmsBegin()
+ hmsScale(0.25f)
+    hmsBegin()
+      hmsJoint(RM_SURF,NULL,-300,0,0)  /* chn19(3) */
+      hmsBegin()
+			hmsBegin()
+				hmsLOD(-2048,2000)
+				hmsBegin()
+					hmsJoint(RM_SURF, gfx_door3, 0,0,0)
+				hmsEnd()
+				hmsLOD(2000,32767)
+				hmsBegin()
+					hmsJoint(RM_SURF, gfx_door3_far, 0,0,0)
+				hmsEnd()
+			hmsEnd()
+            hmsJoint(RM_SURF,NULL,0,0,0)	  	/* sphere2(1) */
+            hmsJoint(RM_SURF,NULL,0,0,0)  		/* sphere1(0) */
+         hmsEnd()
+      hmsEnd()
+   hmsEnd()
+ hmsEnd()
+ hmsExit()
 };
 
-// 0x16000868
-const GeoLayout castle_door_1_star_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 1000),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03013E28),
-                  GEO_OPEN_NODE(),
-                     GEO_DISPLAY_LIST(LAYER_TRANSPARENT, door_seg3_dl_030142B0),
-                  GEO_CLOSE_NODE(),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(1000, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03013E28),
-                  GEO_OPEN_NODE(),
-                     GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, door_seg3_dl_030142E0),
-                  GEO_CLOSE_NODE(),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+/* ====================================================================================	
+		: RCP_HmsDoor4
+======================================================================================= */
+Hierarchy RCP_HmsDoor4[] = {
+ hmsTrans(78,0,0)
+ hmsBegin()
+ hmsScale(0.25f)
+    hmsBegin()
+      hmsJoint(RM_SURF,NULL,-300,0,0)  /* chn19(3) */
+      hmsBegin()
+			hmsBegin()
+				hmsLOD(-2048,2000)
+				hmsBegin()
+					hmsJoint(RM_SURF, gfx_door4, 0,0,0)
+				hmsEnd()
+				hmsLOD(2000,32767)
+				hmsBegin()
+					hmsJoint(RM_SURF, gfx_door4_far, 0,0,0)
+				hmsEnd()
+			hmsEnd()
+            hmsJoint(RM_SURF,NULL,0,0,0)	  	/* sphere2(1) */
+            hmsJoint(RM_SURF,NULL,0,0,0)  		/* sphere1(0) */
+         hmsEnd()
+      hmsEnd()
+   hmsEnd()
+ hmsEnd()
+ hmsExit()
 };
 
-// 0x1600091C
-const GeoLayout castle_door_3_stars_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 1000),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03013E28),
-                  GEO_OPEN_NODE(),
-                     GEO_DISPLAY_LIST(LAYER_TRANSPARENT, door_seg3_dl_03014310),
-                  GEO_CLOSE_NODE(),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(1000, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03013E28),
-                  GEO_OPEN_NODE(),
-                     GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, door_seg3_dl_03014340),
-                  GEO_CLOSE_NODE(),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
-};
-
-// 0x160009D0
-const GeoLayout key_door_geo[] = {
-   GEO_TRANSLATE_NODE(0x00, 78, 0, 0),
-   GEO_OPEN_NODE(),
-      GEO_SCALE(0x00, 16384),
-      GEO_OPEN_NODE(),
-         GEO_ANIMATED_PART(LAYER_OPAQUE, -300, 0, 0, NULL),
-         GEO_OPEN_NODE(),
-            GEO_OPEN_NODE(),
-               GEO_RENDER_RANGE(-2048, 1000),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03013E28),
-                  GEO_OPEN_NODE(),
-                     GEO_DISPLAY_LIST(LAYER_OPAQUE, door_seg3_dl_03014540),
-                  GEO_CLOSE_NODE(),
-               GEO_CLOSE_NODE(),
-               GEO_RENDER_RANGE(1000, 32767),
-               GEO_OPEN_NODE(),
-                  GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, door_seg3_dl_03013E28),
-                  GEO_OPEN_NODE(),
-                     GEO_DISPLAY_LIST(LAYER_OPAQUE_DECAL, door_seg3_dl_03014528),
-                  GEO_CLOSE_NODE(),
-               GEO_CLOSE_NODE(),
-            GEO_CLOSE_NODE(),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-            GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, NULL),
-         GEO_CLOSE_NODE(),
-      GEO_CLOSE_NODE(),
-   GEO_CLOSE_NODE(),
-GEO_CLOSE_NODE(), //! more close than open nodes
-GEO_END(),
+/* ====================================================================================	
+		: RCP_HmsDoor5
+======================================================================================= */
+Hierarchy RCP_HmsDoor5[] = {
+ hmsTrans(78,0,0)
+ hmsBegin()
+ hmsScale(0.25f)
+    hmsBegin()
+      hmsJoint(RM_SURF,NULL,-300,0,0)  /* chn19(3) */
+      hmsBegin()
+			hmsBegin()
+				hmsLOD(-2048,2000)
+				hmsBegin()
+					hmsJoint(RM_SURF, gfx_door5, 0,0,0)
+				hmsEnd()
+				hmsLOD(2000,32767)
+				hmsBegin()
+					hmsJoint(RM_SURF, gfx_door5_far, 0,0,0)
+				hmsEnd()
+			hmsEnd()
+            hmsJoint(RM_SURF,NULL,0,0,0)	  	/* sphere2(1) */
+            hmsJoint(RM_SURF,NULL,0,0,0)  		/* sphere1(0) */
+         hmsEnd()
+      hmsEnd()
+   hmsEnd()
+ hmsEnd()
+ hmsExit()
 };

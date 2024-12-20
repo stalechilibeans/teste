@@ -155,10 +155,18 @@ ALIGNED8 static const u8 lll_seg7_texture_0700E400[] = {
 
 // 0x0700EC00 - 0x0700F400
 ALIGNED8 static const u8 lll_seg7_texture_0700EC00[] = {
-#include "levels/lll/31.rgba16.inc.c"
+#include "levels/lll/33.rgba16.inc.c"
 };
 
 // 0x0700F400 - 0x0700FC00
 ALIGNED8 static const u8 lll_seg7_texture_0700F400[] = {
-#include "levels/lll/32.rgba16.inc.c"
+#include "levels/lll/34.rgba16.inc.c"
+};
+
+ALIGNED8 static const u8 lll_seg7_texture_areamap_top[] = {
+#include "levels/lll/areamap_fire_bubble_top.rgba16.inc.c"
+};
+
+ALIGNED8 static const u8 lll_seg7_texture_areamap_bottom[] = {
+#include "levels/lll/areamap_fire_bubble_bottom.rgba16.inc.c"
 };

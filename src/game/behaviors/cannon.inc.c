@@ -59,8 +59,7 @@ void opened_cannon_act_6(void) {
         if (o->oTimer < 6) {
         } else {
             if (o->oTimer < 22) {
-                o->oMoveAngleYaw =
-                    sins(o->oCannonUnkF4) * 0x4000 + ((s16)(o->oBehParams2ndByte << 8));
+                o->oMoveAngleYaw = sins(o->oCannonUnkF4) * 0x4000 + ((s16)(o->oBehParams2ndByte << 8));
                 o->oCannonUnkF4 += 0x400;
             } else if (o->oTimer < 26) {
             } else {
@@ -98,7 +97,6 @@ void opened_cannon_act_2(void) {
 }
 
 void opened_cannon_act_3(void) {
-    UNUSED s32 unused;
     if (o->oTimer > 3)
         o->oAction = 0;
 }

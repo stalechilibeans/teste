@@ -28,7 +28,7 @@ void bhv_collect_star_init(void) {
 }
 
 void bhv_collect_star_loop(void) {
-    o->oFaceAngleYaw += 0x800;
+    o->oAnimState++;
 
     if (o->oInteractStatus & INT_STATUS_INTERACTED) {
         mark_obj_for_deletion(o);
@@ -55,7 +55,7 @@ void bhv_star_spawn_init(void) {
 void bhv_star_spawn_loop(void) {
     switch (o->oAction) {
         case 0:
-            o->oFaceAngleYaw += 0x1000;
+            o->oAnimState++;
             if (o->oTimer > 20)
                 o->oAction = 1;
             break;
@@ -64,7 +64,7 @@ void bhv_star_spawn_loop(void) {
             obj_move_xyz_using_fvel_and_yaw(o);
             o->oStarSpawnUnkFC += o->oVelY;
             o->oPosY = o->oStarSpawnUnkFC + sins((o->oTimer * 0x8000) / 30) * 400.0f;
-            o->oFaceAngleYaw += 0x1000;
+            o->oAnimState++;
             spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
             cur_obj_play_sound_1(SOUND_ENV_STAR);
             if (o->oTimer == 30) {
@@ -82,7 +82,7 @@ void bhv_star_spawn_loop(void) {
 
             spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
             obj_move_xyz_using_fvel_and_yaw(o);
-            o->oFaceAngleYaw = o->oFaceAngleYaw - o->oTimer * 0x10 + 0x1000;
+            o->oAnimState++;
             cur_obj_play_sound_1(SOUND_ENV_STAR);
 
             if (o->oPosY < o->oHomeY) {
@@ -94,7 +94,7 @@ void bhv_star_spawn_loop(void) {
             break;
 
         case 3:
-            o->oFaceAngleYaw += 0x800;
+            o->oAnimState++;
             if (o->oTimer == 20) {
                 gObjCutsceneDone = TRUE;
                 clear_time_stop_flags(TIME_STOP_ENABLED | TIME_STOP_MARIO_AND_DOORS);
@@ -110,12 +110,8 @@ void bhv_star_spawn_loop(void) {
 }
 
 struct Object *spawn_star(struct Object *sp30, f32 sp34, f32 sp38, f32 sp3C) {
-    sp30 = spawn_object_abs_with_rot(o, 0, MODEL_STAR, bhvStarSpawnCoordinates, o->oPosX, o->oPosY,
-                                     o->oPosZ, 0, 0, 0);
+    sp30 = spawn_object_abs_with_rot(o, 0, MODEL_STAR, bhvStar, sp34, sp38, sp3C, 0, 0, 0);
     sp30->oBehParams = o->oBehParams;
-    sp30->oHomeX = sp34;
-    sp30->oHomeY = sp38;
-    sp30->oHomeZ = sp3C;
     sp30->oFaceAnglePitch = 0;
     sp30->oFaceAngleRoll = 0;
     return sp30;

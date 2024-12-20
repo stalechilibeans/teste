@@ -26,10 +26,8 @@ static char gLevelSelect_StageNamesText[64][16] = {
 #undef DEFINE_LEVEL
 
 static u16 gDemoCountdown = 0;
-#ifndef VERSION_JP
 static s16 D_U_801A7C34 = 1;
 static s16 gameOverNotPlayed = 1;
-#endif
 
 // run the demo timer on the PRESS START screen.
 // this function will return a non-0 timer once
@@ -137,56 +135,49 @@ s16 level_select_input_loop(void) {
 int intro_default(void) {
     s32 sp1C = 0;
 
-#ifndef VERSION_JP
     if (D_U_801A7C34 == 1) {
         if (gGlobalTimer < 0x81) {
-            play_sound(SOUND_MARIO_HELLO, gDefaultSoundArgs);
-        } else {
-            play_sound(SOUND_MARIO_PRESS_START_TO_PLAY, gDefaultSoundArgs);
+            play_sound(SOUND_MARIO_YAHOO, gDefaultSoundArgs);
         }
         D_U_801A7C34 = 0;
     }
-#endif
     print_intro_text();
 
+    /*
+        if(gPlayer1Controller->buttonDown == QUIT_LEVEL_SELECT_COMBO) gDebugLevelSelect = 1;
+                                                                 else gDebugLevelSelect = 0;
+    */
+
     if (gPlayer1Controller->buttonPressed & START_BUTTON) {
-#ifdef VERSION_JP
-        play_sound(SOUND_MENU_STAR_SOUND, gDefaultSoundArgs);
-        sp1C = 100 + gDebugLevelSelect;
-#else
         play_sound(SOUND_MENU_STAR_SOUND, gDefaultSoundArgs);
         sp1C = 100 + gDebugLevelSelect;
         D_U_801A7C34 = 1;
-#endif
+
+        save_file_create_temporary_file();
     }
-    return run_press_start_demo_timer(sp1C);
+    return sp1C;
 }
 
 int intro_game_over(void) {
     s32 sp1C = 0;
 
-#ifndef VERSION_JP
     if (gameOverNotPlayed == 1) {
-        play_sound(SOUND_MARIO_GAME_OVER, gDefaultSoundArgs);
+        play_sound(SOUND_MARIO_YAHOO, gDefaultSoundArgs);
         gameOverNotPlayed = 0;
     }
-#endif
 
     print_intro_text();
 
     if (gPlayer1Controller->buttonPressed & START_BUTTON) {
         play_sound(SOUND_MENU_STAR_SOUND, gDefaultSoundArgs);
         sp1C = 100 + gDebugLevelSelect;
-#ifndef VERSION_JP
         gameOverNotPlayed = 1;
-#endif
     }
-    return run_press_start_demo_timer(sp1C);
+    return sp1C;
 }
 
 int intro_play_its_a_me_mario(void) {
-    set_background_music(0, SEQ_SOUND_PLAYER, 0);
-    play_sound(SOUND_MENU_COIN_ITS_A_ME_MARIO, gDefaultSoundArgs);
+    play_sound(0x38108081 + 0x00010000, gDefaultSoundArgs);
     return 1;
 }
 

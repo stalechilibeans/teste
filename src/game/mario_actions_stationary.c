@@ -43,7 +43,6 @@ s32 check_common_idle_cancels(struct MarioState *m) {
     }
 
     if (m->input & INPUT_NONZERO_ANALOG) {
-        m->faceAngle[1] = (s16) m->intendedYaw;
         return set_mario_action(m, ACT_WALKING, 0);
     }
 
@@ -86,7 +85,6 @@ s32 check_common_hold_idle_cancels(struct MarioState *m) {
     }
 
     if (m->input & INPUT_NONZERO_ANALOG) {
-        m->faceAngle[1] = (s16) m->intendedYaw;
         return set_mario_action(m, ACT_HOLD_WALKING, 0);
     }
 
@@ -110,7 +108,7 @@ s32 act_idle(struct MarioState *m) {
         return set_mario_action(m, ACT_COUGHING, 0);
     }
 
-    if (!(m->actionArg & 1) && m->health < 0x300) {
+    if (!(m->actionArg & 1) && m->health < 0x500) {
         return set_mario_action(m, ACT_PANTING, 0);
     }
 
@@ -119,11 +117,7 @@ s32 act_idle(struct MarioState *m) {
     }
 
     if (m->actionState == 3) {
-        if ((m->area->terrainType & TERRAIN_MASK) == TERRAIN_SNOW) {
-            return set_mario_action(m, ACT_SHIVERING, 0);
-        } else {
-            return set_mario_action(m, ACT_START_SLEEPING, 0);
-        }
+        return set_mario_action(m, ACT_START_SLEEPING, 0);
     }
 
     if (m->actionArg & 1) {
@@ -159,7 +153,7 @@ s32 act_idle(struct MarioState *m) {
                     // If Mario hasn't turned his head 10 times yet, stay idle instead of going to
                     // sleep.
                     m->actionTimer++;
-                    if (m->actionTimer < 10) {
+                    if (m->actionTimer < 1) {
                         m->actionState = 0;
                     }
                 }
@@ -231,38 +225,15 @@ s32 act_start_sleeping(struct MarioState *m) {
             break;
     }
 
-    play_anim_sound(m, 1, 41, SOUND_ACTION_PAT_BACK);
-    play_anim_sound(m, 1, 49, SOUND_ACTION_PAT_BACK);
-    play_anim_sound(m, 3, 15, m->terrainSoundAddend + SOUND_ACTION_TERRAIN_BODY_HIT_GROUND);
-
     if (is_anim_at_end(m)) {
         m->actionState++;
     }
-
-#ifndef VERSION_JP
-    if (m->actionState == 2) {
-        if (sp24 == -1) {
-            play_sound(SOUND_MARIO_YAWNING, m->marioObj->header.gfx.cameraToObject);
-        }
-    }
-
-    if (m->actionState == 1) {
-        if (sp24 == -1) {
-            play_sound(SOUND_MARIO_IMA_TIRED, m->marioObj->header.gfx.cameraToObject);
-        }
-    }
-#else
-    if (m->actionState == 2) {
-        play_sound_if_no_flag(m, SOUND_MARIO_YAWNING, MARIO_MARIO_SOUND_PLAYED);
-    }
-#endif
 
     stationary_ground_step(m);
     return 0;
 }
 
 s32 act_sleeping(struct MarioState *m) {
-    s32 sp24;
     if (m->input & INPUT_UNKNOWN_A41F /* ? */) {
         return set_mario_action(m, ACT_WAKING_UP, m->actionState);
     }
@@ -277,56 +248,8 @@ s32 act_sleeping(struct MarioState *m) {
 
     m->marioBodyState->eyeState = MARIO_EYES_CLOSED;
     stationary_ground_step(m);
-    switch (m->actionState) {
-        case 0: {
-            sp24 = set_mario_animation(m, MARIO_ANIM_SLEEP_IDLE);
 
-            if (sp24 == -1 && !m->actionTimer) {
-                lower_background_noise(2);
-            }
-
-            if (sp24 == 2) {
-                play_sound(SOUND_MARIO_SNORING1, m->marioObj->header.gfx.cameraToObject);
-            }
-
-            if (sp24 == 20) {
-                play_sound(SOUND_MARIO_SNORING2, m->marioObj->header.gfx.cameraToObject);
-            }
-
-            if (is_anim_at_end(m)) {
-                m->actionTimer++;
-                if (m->actionTimer > 45) {
-                    m->actionState++;
-                }
-            }
-            break;
-        }
-        case 1: {
-            if (set_mario_animation(m, MARIO_ANIM_SLEEP_START_LYING) == 18) {
-                play_mario_heavy_landing_sound(m, SOUND_ACTION_TERRAIN_BODY_HIT_GROUND);
-            }
-
-            if (is_anim_at_end(m)) {
-                m->actionState++;
-            }
-            break;
-        }
-        case 2: {
-            sp24 = set_mario_animation(m, MARIO_ANIM_SLEEP_LYING);
-#ifndef VERSION_JP
-            play_sound_if_no_flag(m, SOUND_MARIO_SNORING3, MARIO_ACTION_SOUND_PLAYED);
-#else
-            if (sp24 == 2) {
-                play_sound(SOUND_MARIO_SNORING2, m->marioObj->header.gfx.cameraToObject);
-            }
-
-            if (sp24 == 25) {
-                play_sound(SOUND_MARIO_SNORING1, m->marioObj->header.gfx.cameraToObject);
-            }
-#endif
-            break;
-        }
-    }
+    set_mario_animation(m, MARIO_ANIM_SLEEP_IDLE);
     return 0;
 }
 
@@ -536,10 +459,6 @@ s32 act_crouching(struct MarioState *m) {
         return set_mario_action(m, ACT_SHOCKWAVE_BOUNCE, 0);
     }
 
-    if (m->input & INPUT_A_PRESSED) {
-        return set_jumping_action(m, ACT_BACKFLIP, 0);
-    }
-
     if (m->input & INPUT_OFF_FLOOR) {
         return set_mario_action(m, ACT_FREEFALL, 0);
     }
@@ -560,10 +479,6 @@ s32 act_crouching(struct MarioState *m) {
         return set_mario_action(m, ACT_START_CRAWLING, 0);
     }
 
-    if (m->input & INPUT_B_PRESSED) {
-        return set_mario_action(m, ACT_PUNCHING, 9);
-    }
-
     stationary_ground_step(m);
     set_mario_animation(m, MARIO_ANIM_CROUCHING);
     return 0;
@@ -582,10 +497,7 @@ s32 act_panting(struct MarioState *m) {
         return 1;
     }
 
-    if (set_mario_animation(m, MARIO_ANIM_WALK_PANTING) == 1) {
-        play_sound(SOUND_MARIO_PANTING + ((gAudioRandom % 3U) << 0x10),
-                   m->marioObj->header.gfx.cameraToObject);
-    }
+    set_mario_animation(m, MARIO_ANIM_WALK_PANTING);
 
     stationary_ground_step(m);
     m->marioBodyState->eyeState = MARIO_EYES_HALF_CLOSED;
@@ -705,10 +617,6 @@ s32 act_start_crouching(struct MarioState *m) {
         return set_mario_action(m, ACT_FREEFALL, 0);
     }
 
-    if (m->input & INPUT_A_PRESSED) {
-        return set_jumping_action(m, ACT_BACKFLIP, 0);
-    }
-
     if (m->input & INPUT_ABOVE_SLIDE) {
         return set_mario_action(m, ACT_BEGIN_SLIDING, 0);
     }
@@ -728,10 +636,6 @@ s32 act_stop_crouching(struct MarioState *m) {
 
     if (m->input & INPUT_OFF_FLOOR) {
         return set_mario_action(m, ACT_FREEFALL, 0);
-    }
-
-    if (m->input & INPUT_A_PRESSED) {
-        return set_jumping_action(m, ACT_BACKFLIP, 0);
     }
 
     if (m->input & INPUT_ABOVE_SLIDE) {

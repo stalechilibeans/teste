@@ -25,26 +25,11 @@ extern const Gfx butterfly_seg3_dl_030054A0[];
 extern const struct Animation *const butterfly_seg3_anims_030056B0[];
 
 // coin
-extern const GeoLayout yellow_coin_geo[];
-extern const GeoLayout yellow_coin_no_shadow_geo[];
-extern const GeoLayout blue_coin_geo[];
-extern const GeoLayout blue_coin_no_shadow_geo[];
-extern const GeoLayout red_coin_geo[];
-extern const GeoLayout red_coin_no_shadow_geo[];
-extern const Gfx coin_seg3_dl_03007780[];
-extern const Gfx coin_seg3_dl_030077D0[];
-extern const Gfx coin_seg3_dl_03007800[];
-extern const Gfx coin_seg3_dl_03007828[];
-extern const Gfx coin_seg3_dl_03007850[];
-extern const Gfx coin_seg3_dl_03007878[];
-extern const Gfx coin_seg3_dl_030078A0[];
-extern const Gfx coin_seg3_dl_030078C8[];
-extern const Gfx coin_seg3_dl_030078F0[];
-extern const Gfx coin_seg3_dl_03007918[];
-extern const Gfx coin_seg3_dl_03007940[];
-extern const Gfx coin_seg3_dl_03007968[];
-extern const Gfx coin_seg3_dl_03007990[];
-extern const Gfx coin_seg3_dl_030079B8[];
+extern const GeoLayout RCP_HmsItemCoin[];
+extern Gfx  RCP_coin1[];
+extern Gfx  RCP_coin2[];
+extern Gfx  RCP_coin3[];
+extern Gfx  RCP_coin4[];
 
 // dirt
 extern const GeoLayout dirt_animation_geo[];
@@ -64,66 +49,43 @@ extern const Gfx dirt_seg3_dl_0302C420[];
 extern const Gfx dirt_seg3_dl_0302C458[];
 
 // door
-extern const GeoLayout castle_door_geo[];
-extern const GeoLayout cabin_door_geo[];
-extern const GeoLayout wooden_door_geo[];
-extern const GeoLayout wooden_door2_geo[];
-extern const GeoLayout metal_door_geo[];
-extern const GeoLayout hazy_maze_door_geo[];
-extern const GeoLayout haunted_door_geo[];
-extern const GeoLayout castle_door_0_star_geo[];
-extern const GeoLayout castle_door_1_star_geo[];
-extern const GeoLayout castle_door_3_stars_geo[];
-extern const GeoLayout key_door_geo[];
-extern const Gfx door_seg3_dl_03013C10[];
-extern const Gfx door_seg3_dl_03013CC8[];
-extern const Gfx door_seg3_dl_03013D78[];
-extern const Gfx door_seg3_dl_03013E28[];
-extern const Gfx door_seg3_dl_03013EA8[];
-extern const Gfx door_seg3_dl_03014020[];
-extern const Gfx door_seg3_dl_03014100[];
-extern const Gfx door_seg3_dl_03014128[];
-extern const Gfx door_seg3_dl_030141C0[];
-extern const Gfx door_seg3_dl_03014218[];
-extern const Gfx door_seg3_dl_03014250[];
-extern const Gfx door_seg3_dl_03014280[];
-extern const Gfx door_seg3_dl_030142B0[];
-extern const Gfx door_seg3_dl_030142E0[];
-extern const Gfx door_seg3_dl_03014310[];
-extern const Gfx door_seg3_dl_03014340[];
-extern const Gfx door_seg3_dl_03014470[];
-extern const Gfx door_seg3_dl_030144E0[];
-extern const Gfx door_seg3_dl_03014528[];
-extern const Gfx door_seg3_dl_03014540[];
-extern const Gfx door_seg3_dl_03014888[];
-extern const Gfx door_seg3_dl_030149C0[];
-extern const Gfx door_seg3_dl_03014A20[];
-extern const Gfx door_seg3_dl_03014A50[];
-extern const Gfx door_seg3_dl_03014A80[];
-extern const Gfx door_seg3_dl_03014B30[];
-extern const Gfx door_seg3_dl_03014BE0[];
-extern const Gfx door_seg3_dl_03014C90[];
-extern const Gfx door_seg3_dl_03014D40[];
-extern const Gfx door_seg3_dl_03014EF0[];
-extern const Gfx door_seg3_dl_03014F30[];
-extern const Gfx door_seg3_dl_03014F68[];
-extern const Gfx door_seg3_dl_03014F98[];
-extern const Gfx door_seg3_dl_03015008[];
-extern const Gfx door_seg3_dl_03015078[];
-extern const Gfx door_seg3_dl_030150E8[];
-extern const Gfx door_seg3_dl_03015158[];
+extern GeoLayout RCP_HmsMainDoor[];
+extern GeoLayout RCP_HmsMainroomDoorA[];
+extern GeoLayout RCP_HmsMainroomDoorB[];
+extern GeoLayout RCP_HmsMainroomDoorC[];
+extern GeoLayout RCP_HmsMainroomDoorD[];
+extern GeoLayout RCP_HmsDoor1[];
+extern GeoLayout RCP_HmsDoor2[];
+extern GeoLayout RCP_HmsDoor3[];
+extern GeoLayout RCP_HmsDoor4[];
+extern GeoLayout RCP_HmsDoor5[];
+extern Gfx RCP_NearMainDoor[];
+extern Gfx RCP_FarMainDoor[];
+extern Gfx RCP_mainroom_doorA[];
+extern Gfx RCP_mainroom_doorB[];
+extern Gfx RCP_mainroom_doorC[];
+extern Gfx RCP_mainroom_doorD[];
+extern Gfx gfx_door1[];
+extern Gfx gfx_door2[];
+extern Gfx gfx_door3[];
+extern Gfx gfx_door4[];
+extern Gfx gfx_door5[];
+extern Gfx gfx_door1_far[];
+extern Gfx gfx_door2_far[];
+extern Gfx gfx_door3_far[];
+extern Gfx gfx_door4_far[];
+extern Gfx gfx_door5_far[];
 extern const struct Animation *const door_seg3_anims_030156C0[];
 
 // explosion
-extern const GeoLayout explosion_geo[];
-extern const Gfx explosion_seg3_dl_03004208[];
-extern const Gfx explosion_seg3_dl_03004298[];
-extern const Gfx explosion_seg3_dl_030042B0[];
-extern const Gfx explosion_seg3_dl_030042C8[];
-extern const Gfx explosion_seg3_dl_030042E0[];
-extern const Gfx explosion_seg3_dl_030042F8[];
-extern const Gfx explosion_seg3_dl_03004310[];
-extern const Gfx explosion_seg3_dl_03004328[];
+extern const GeoLayout RCP_HmsItembombfire[];
+extern Gfx  RCP_bombfire1[];
+extern Gfx  RCP_bombfire2[];
+extern Gfx  RCP_bombfire3[];
+extern Gfx  RCP_bombfire4[];
+extern Gfx  RCP_bombfire5[];
+extern Gfx  RCP_bombfire6[];
+extern Gfx  RCP_bombfire7[];
 
 // flame
 extern const GeoLayout red_flame_shadow_geo[];
@@ -192,23 +154,34 @@ extern const Gfx pebble_seg3_dl_0301CB00[];
 // power_meter
 extern const u8 *const power_meter_health_segments_lut[];
 extern const Gfx dl_power_meter_base[];
-extern const Gfx dl_power_meter_health_segments_begin[];
-extern const Gfx dl_power_meter_health_segments_end[];
 
 // sand
 extern const Gfx sand_seg3_dl_0302BCD0[];
 
 // star
-extern const GeoLayout star_geo[];
-extern const Gfx star_seg3_dl_0302B7B0[];
-extern const Gfx star_seg3_dl_0302B870[];
-extern const Gfx star_seg3_dl_0302B9C0[];
-extern const Gfx star_seg3_dl_0302BA18[];
+extern const GeoLayout RCP_HmsItemStar[];
+extern const GeoLayout RCP_HmsItemStarDust[];
+extern Gfx  RCP_star1[];
+extern Gfx  RCP_star2[];
+extern Gfx  RCP_star3[];
+extern Gfx  RCP_star4[];
+extern Gfx  RCP_star5[];
+extern Gfx  RCP_star6[];
+extern Gfx  RCP_star7[];
+extern Gfx  RCP_star8[];
+extern Gfx  RCP_star_dust1[];
+extern Gfx  RCP_star_dust2[];
+extern Gfx  RCP_star_dust3[];
+extern Gfx  RCP_star_dust4[];
+extern Gfx  RCP_star_dust5[];
+extern Gfx  RCP_star_dust6[];
+extern Gfx  RCP_star_dust7[];
+extern Gfx  RCP_star_dust8[];
+
 
 // transparent_star
-extern const GeoLayout transparent_star_geo[];
-extern const Gfx transparent_star_seg3_dl_0302C560[];
-extern const Gfx transparent_star_seg3_dl_0302C620[];
+extern const GeoLayout RCP_HmsDotstar[];
+extern const Gfx gfx_dotstar[];
 
 // tree
 extern const GeoLayout bubbly_tree_geo[];

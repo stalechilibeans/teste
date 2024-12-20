@@ -495,9 +495,10 @@ s32 let_go_of_ledge(struct MarioState *m) {
     struct Surface *floor;
 
     m->vel[1] = 0.0f;
-    m->forwardVel = -8.0f;
+    m->forwardVel = 8.0f;
     m->pos[0] -= 60.0f * sins(m->faceAngle[1]);
     m->pos[2] -= 60.0f * coss(m->faceAngle[1]);
+    m->faceAngle[1] += 0x8000;
 
     floorHeight = find_floor(m->pos[0], m->pos[1], m->pos[2], &floor);
     if (floorHeight < m->pos[1] - 100.0f) {
@@ -613,7 +614,7 @@ s32 act_ledge_climb_slow(struct MarioState *m) {
         return check_common_action_exits(m);
     }
 
-    if (m->actionTimer == 10) {
+    if (m->actionTimer == 0) {
         play_sound_if_no_flag(m, SOUND_MARIO_EEUH, MARIO_MARIO_SOUND_PLAYED);
     }
 
@@ -733,14 +734,11 @@ s32 act_in_cannon(struct MarioState *m) {
             if (m->input & INPUT_A_PRESSED) {
                 m->forwardVel = 100.0f * coss(m->faceAngle[0]);
 
-                m->vel[1] = 100.0f * sins(m->faceAngle[0]);
+                m->vel[1] = 120.0f * sins(m->faceAngle[0]);
 
                 m->pos[0] += 120.0f * coss(m->faceAngle[0]) * sins(m->faceAngle[1]);
                 m->pos[1] += 120.0f * sins(m->faceAngle[0]);
                 m->pos[2] += 120.0f * coss(m->faceAngle[0]) * coss(m->faceAngle[1]);
-
-                play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
-                play_sound(SOUND_OBJ_POUNDING_CANNON, m->marioObj->header.gfx.cameraToObject);
 
                 m->marioObj->header.gfx.node.flags |= GRAPH_RENDER_ACTIVE;
 

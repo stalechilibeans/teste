@@ -192,7 +192,7 @@ void king_bobomb_act_8(void) {
         stop_background_music(SEQUENCE_ARGS(4, SEQ_EVENT_BOSS));
 }
 
-void king_bobomb_act_4() { // bobomb been thrown
+void king_bobomb_act_4() {                // bobomb been thrown
     if (o->oPosY - o->oHomeY > -100.0f) { // not thrown off hill
         if (o->oMoveFlags & 1) {
             o->oHealth--;
@@ -227,7 +227,7 @@ void king_bobomb_act_5() { // bobomb returns home
                 cur_obj_play_sound_2(SOUND_OBJ_KING_BOBOMB_JUMP);
             o->oKingBobombUnkF8 = 1;
             cur_obj_init_animation_and_extend_if_at_end(8);
-            o->oMoveAngleYaw =  cur_obj_angle_to_home();
+            o->oMoveAngleYaw = cur_obj_angle_to_home();
             if (o->oPosY < o->oHomeY)
                 o->oVelY = 100.0f;
             else {

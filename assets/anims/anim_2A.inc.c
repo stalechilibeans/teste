@@ -3,7 +3,7 @@ static const struct Animation anim_2A[] = {
     189,
     0,
     0,
-    0x28,
+    0x1,
     ANIMINDEX_NUMPARTS(anim_2A_indices),
     anim_2A_values,
     anim_2A_indices,

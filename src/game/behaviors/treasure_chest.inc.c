@@ -65,7 +65,8 @@ void bhv_treasure_chest_bottom_init(void) {
 void bhv_treasure_chest_bottom_loop(void) {
     switch (o->oAction) {
         case 0:
-            if (obj_check_if_facing_toward_angle(o->oMoveAngleYaw, gMarioObject->header.gfx.angle[1] + 0x8000, 0x3000)) {
+            if (obj_check_if_facing_toward_angle(o->oMoveAngleYaw,
+                                                 gMarioObject->header.gfx.angle[1] + 0x8000, 0x3000)) {
                 if (is_point_within_radius_of_mario(o->oPosX, o->oPosY, o->oPosZ, 150)) {
                     if (!o->parentObj->oTreasureChestUnkF8) {
                         if (o->parentObj->oTreasureChestUnkF4 == o->oBehParams2ndByte) {
@@ -173,10 +174,9 @@ void bhv_treasure_chest_jrb_loop(void) {
 }
 
 void bhv_treasure_chest_init(void) {
-    spawn_treasure_chest(1, -4500, -5119, 1300, -0x6001);
-    spawn_treasure_chest(2, -1800, -5119, 1050, 0x1FFF);
-    spawn_treasure_chest(3, -4500, -5119, -1100, 9102);
-    spawn_treasure_chest(4, -2400, -4607, 125, 16019);
+    spawn_treasure_chest(1, -3625, -4607, 0, random_u16());
+    spawn_treasure_chest(2, -2955, -4607, 601, random_u16());
+    spawn_treasure_chest(3, -2660, -4607, -164, random_u16());
 
     o->oTreasureChestUnkF4 = 1;
     o->oTreasureChestUnkFC = 0;

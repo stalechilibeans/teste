@@ -1497,8 +1497,6 @@ void update_view(struct ObjView *view) {
                     sPickedObject->drawFlags |= OBJ_PICKED;
                     sPickedObject->drawFlags |= OBJ_USE_ENV_COLOUR;
                     sUpdateViewState.view->pickedObj = sPickedObject;
-                    gGdCtrl.csrXatApress = gGdCtrl.csrX = sGrabCords.x;
-                    gGdCtrl.csrYatApress = gGdCtrl.csrY = sGrabCords.y;
                 }
             }
 

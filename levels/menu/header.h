@@ -18,6 +18,11 @@ extern const GeoLayout geo_menu_file_select_strings_and_menu_cursor[];
 extern const GeoLayout geo_menu_act_selector_strings[];
 
 // leveldata
+extern Gfx gfx_aka_button[];
+extern Gfx gfx_ao_button[];
+extern Gfx gfx_ki_button[];
+extern Gfx gfx_midori_button[];
+extern Gfx gfx_momo_button[];
 extern const Gfx dl_menu_mario_save_button_base[];
 extern const Gfx dl_menu_mario_new_button_base[];
 extern const Gfx dl_menu_save_button_back[];

@@ -305,23 +305,12 @@ void *load_to_fixed_pool_addr(u8 *destAddr, u8 *srcStart, u8 *srcEnd) {
  * base address of segment to this address.
  */
 void *load_segment_decompress(s32 segment, u8 *srcStart, u8 *srcEnd) {
-    void *dest = NULL;
-
     u32 compSize = ALIGN16(srcEnd - srcStart);
-    u8 *compressed = main_pool_alloc(compSize, MEMORY_POOL_RIGHT);
+    void *dest = main_pool_alloc(compSize, MEMORY_POOL_LEFT);
 
-    // Decompressed size from mio0 header
-    u32 *size = (u32 *) (compressed + 4);
-
-    if (compressed != NULL) {
-        dma_read(compressed, srcStart, srcEnd);
-        dest = main_pool_alloc(*size, MEMORY_POOL_LEFT);
-        if (dest != NULL) {
-            decompress(compressed, dest);
-            set_segment_base_addr(segment, dest);
-            main_pool_free(compressed);
-        } else {
-        }
+    if (dest != NULL) {
+        dma_read(dest, srcStart, srcEnd);
+        set_segment_base_addr(segment, dest);
     } else {
     }
     return dest;
@@ -329,17 +318,10 @@ void *load_segment_decompress(s32 segment, u8 *srcStart, u8 *srcEnd) {
 
 void *load_segment_decompress_heap(u32 segment, u8 *srcStart, u8 *srcEnd) {
     UNUSED void *dest = NULL;
-    u32 compSize = ALIGN16(srcEnd - srcStart);
-    u8 *compressed = main_pool_alloc(compSize, MEMORY_POOL_RIGHT);
-    UNUSED u32 *pUncSize = (u32 *) (compressed + 4);
 
-    if (compressed != NULL) {
-        dma_read(compressed, srcStart, srcEnd);
-        decompress(compressed, gDecompressionHeap);
-        set_segment_base_addr(segment, gDecompressionHeap);
-        main_pool_free(compressed);
-    } else {
-    }
+    dma_read(gDecompressionHeap, srcStart, srcEnd);
+    set_segment_base_addr(segment, gDecompressionHeap);
+
     return gDecompressionHeap;
 }
 

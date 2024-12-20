@@ -6,7 +6,7 @@ struct ObjectHitbox sYellowCoinHitbox = {
     /* damageOrCoinValue: */ 1,
     /* health: */ 0,
     /* numLootCoins: */ 0,
-    /* radius: */ 100,
+    /* radius: */ 32,
     /* height: */ 64,
     /* hurtboxRadius: */ 0,
     /* hurtboxHeight: */ 0,
@@ -16,7 +16,8 @@ s16 D_8032F2A4[][2] = { { 0, -150 },  { 0, -50 },   { 0, 50 },   { 0, 150 },
                         { -50, 100 }, { -100, 50 }, { 50, 100 }, { 100, 50 } };
 
 s32 bhv_coin_sparkles_init(void) {
-    if (o->oInteractStatus & INT_STATUS_INTERACTED && !(o->oInteractStatus & INT_STATUS_TOUCHED_BOB_OMB)) {
+    if (o->oInteractStatus & INT_STATUS_INTERACTED
+        && !(o->oInteractStatus & INT_STATUS_TOUCHED_BOB_OMB)) {
         spawn_object(o, MODEL_SPARKLES, bhvGoldenCoinSparkles);
         obj_mark_for_deletion(o);
         return 1;
@@ -31,7 +32,9 @@ void bhv_yellow_coin_init(void) {
     bhv_init_room();
     cur_obj_update_floor_height();
     if (500.0f < absf(o->oPosY - o->oFloorHeight))
-        cur_obj_set_model(MODEL_YELLOW_COIN_NO_SHADOW);
+        cur_obj_set_model(MODEL_YELLOW_COIN);
+    if (find_water_level(o->oPosX, o->oPosZ) >= -10000.0)
+        cur_obj_set_model(MODEL_YELLOW_COIN);
     if (o->oFloorHeight < -10000.0f)
         obj_mark_for_deletion(o);
 }
@@ -50,7 +53,7 @@ void bhv_temp_coin_loop(void) {
 
 void bhv_coin_init(void) {
     o->oVelY = random_float() * 10.0f + 30 + o->oCoinUnk110;
-    o->oForwardVel = random_float() * 10.0f;
+    o->oForwardVel = random_float() * 5.0f;
     o->oMoveAngleYaw = random_u16();
     cur_obj_set_behavior(bhvYellowCoin);
     obj_set_hitbox(o, &sYellowCoinHitbox);
@@ -74,14 +77,7 @@ void bhv_coin_loop(void) {
             }
         }
     }
-    if (o->oTimer == 0)
-#ifdef VERSION_US
-        cur_obj_play_sound_2(SOUND_GENERAL_COIN_SPURT_2);
-#elif VERSION_EU
-        cur_obj_play_sound_2(SOUND_GENERAL_COIN_SPURT_EU);
-#else
-        cur_obj_play_sound_2(SOUND_GENERAL_COIN_SPURT);
-#endif
+
     if (o->oVelY < 0)
         cur_obj_become_tangible();
     if (o->oMoveFlags & OBJ_MOVE_LANDED) {
@@ -92,16 +88,7 @@ void bhv_coin_loop(void) {
 #endif
             obj_mark_for_deletion(o);
     }
-#ifndef VERSION_JP
-    if (o->oMoveFlags & OBJ_MOVE_13) {
-        if (o->oCoinUnk1B0 < 5)
-            cur_obj_play_sound_2(0x30364081);
-        o->oCoinUnk1B0++;
-    }
-#else
-    if (o->oMoveFlags & OBJ_MOVE_13)
-        cur_obj_play_sound_2(SOUND_GENERAL_COIN_DROP);
-#endif
+
     if (cur_obj_wait_then_blink(400, 20))
         obj_mark_for_deletion(o);
     bhv_coin_sparkles_init();
@@ -122,7 +109,7 @@ void bhv_coin_formation_spawn_loop(void) {
         } else {
             cur_obj_update_floor_height();
             if (absf(o->oPosY - o->oFloorHeight) > 250.0f)
-                cur_obj_set_model(MODEL_YELLOW_COIN_NO_SHADOW);
+                cur_obj_set_model(MODEL_YELLOW_COIN_SOLID_SHADOW);
         }
     } else {
         if (bhv_coin_sparkles_init())
@@ -208,8 +195,6 @@ void bhv_coin_formation_loop(void) {
 void coin_inside_boo_act_1(void) {
     cur_obj_update_floor_and_walls();
     cur_obj_if_hit_wall_bounce_away();
-    if (o->oMoveFlags & OBJ_MOVE_13)
-        cur_obj_play_sound_2(SOUND_GENERAL_COIN_DROP);
     if (o->oTimer > 90 || (o->oMoveFlags & OBJ_MOVE_LANDED)) {
         obj_set_hitbox(o, &sYellowCoinHitbox);
         cur_obj_become_tangible();

@@ -337,8 +337,7 @@ s32 update_objects_during_time_stop(struct ObjectNode *objList, struct ObjectNod
                 unfrozen = TRUE;
             }
 
-            if (gCurrentObject->activeFlags
-                & (ACTIVE_FLAG_UNIMPORTANT | ACTIVE_FLAG_INITIATED_TIME_STOP)) {
+            if (gCurrentObject->activeFlags & ACTIVE_FLAG_INITIATED_TIME_STOP) {
                 unfrozen = TRUE;
             }
         }

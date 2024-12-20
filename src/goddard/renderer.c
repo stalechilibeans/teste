@@ -2396,18 +2396,18 @@ void parse_p1_controller(void) {
         gdctrl->csrY -= gdctrl->stickY * 0.1; //? 0.1f
     }
     // border checks? is this for the cursor finger movement?
-    if ((f32) gdctrl->csrX < (sScreenView2->parent->upperLeft.x + 16.0f)) {
-        gdctrl->csrX = (s32) (sScreenView2->parent->upperLeft.x + 16.0f);
+    if ((f32) gdctrl->csrX < (sScreenView2->parent->upperLeft.x)) {
+        gdctrl->csrX = (s32) (sScreenView2->parent->upperLeft.x);
     }
 
     if ((f32) gdctrl->csrX
-        > (sScreenView2->parent->upperLeft.x + sScreenView2->parent->lowerRight.x - 48.0f)) {
+        > (sScreenView2->parent->upperLeft.x + sScreenView2->parent->lowerRight.x - 32.0f)) {
         gdctrl->csrX =
-            (s32) (sScreenView2->parent->upperLeft.x + sScreenView2->parent->lowerRight.x - 48.0f);
+            (s32) (sScreenView2->parent->upperLeft.x + sScreenView2->parent->lowerRight.x - 32.0f);
     }
 
-    if ((f32) gdctrl->csrY < (sScreenView2->parent->upperLeft.y + 16.0f)) {
-        gdctrl->csrY = (s32) (sScreenView2->parent->upperLeft.y + 16.0f);
+    if ((f32) gdctrl->csrY < (sScreenView2->parent->upperLeft.y)) {
+        gdctrl->csrY = (s32) (sScreenView2->parent->upperLeft.y);
     }
 
     if ((f32) gdctrl->csrY

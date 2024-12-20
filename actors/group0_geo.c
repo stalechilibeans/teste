@@ -15,4 +15,10 @@
 #include "sparkle/geo.inc.c"
 #include "water_splash/geo.inc.c"
 #include "sparkle_animation/geo.inc.c"
-#include "mario/geo.inc.c"
+
+// Mario
+#include "mario/mario/hms_mario.sou"
+
+/* Luigi
+#include "mario/luigi/hms_luigi.sou"
+*/

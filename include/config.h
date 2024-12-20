@@ -27,11 +27,7 @@
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
 
-// Border Height Define for NTSC Versions
-#ifndef VERSION_EU
-#define BORDER_HEIGHT 8
-#else
-#define BORDER_HEIGHT 1
-#endif
+// Border Height Define
+#define BORDER_HEIGHT 0
 
 #endif

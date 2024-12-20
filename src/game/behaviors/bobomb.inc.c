@@ -41,13 +41,10 @@ void bobomb_act_explode(void) {
     }
 }
 
-
 void bobomb_check_interactions(void) {
     obj_set_hitbox(o, &sBobombHitbox);
-    if ((o->oInteractStatus & INT_STATUS_INTERACTED) != 0)
-    {
-        if ((o->oInteractStatus & INT_STATUS_MARIO_UNK1) != 0)
-        {
+    if ((o->oInteractStatus & INT_STATUS_INTERACTED) != 0) {
+        if ((o->oInteractStatus & INT_STATUS_MARIO_UNK1) != 0) {
             o->oMoveAngleYaw = gMarioObject->header.gfx.angle[1];
             o->oForwardVel = 25.0;
             o->oVelY = 30.0;

@@ -72,13 +72,12 @@ s8 D_8032C650 = 0;
 s8 gShowProfiler = FALSE;
 s8 gShowDebugText = FALSE;
 
+u16 sProfilerKeySequence[] = { U_JPAD, U_JPAD, D_JPAD, D_JPAD, L_JPAD, R_JPAD, L_JPAD, R_JPAD };
+
+u16 sDebugTextKeySequence[] = { D_JPAD, D_JPAD, U_JPAD, U_JPAD, L_JPAD, R_JPAD, L_JPAD, R_JPAD };
+
 // unused
 void handle_debug_key_sequences(void) {
-    static u16 sProfilerKeySequence[] = {
-        U_JPAD, U_JPAD, D_JPAD, D_JPAD, L_JPAD, R_JPAD, L_JPAD, R_JPAD
-    };
-    static u16 sDebugTextKeySequence[] = { D_JPAD, D_JPAD, U_JPAD, U_JPAD,
-                                           L_JPAD, R_JPAD, L_JPAD, R_JPAD };
     static s16 sProfilerKey = 0;
     static s16 sDebugTextKey = 0;
     if (gPlayer3Controller->buttonPressed != 0) {
@@ -121,9 +120,6 @@ void stub_main_1(void) {
 void stub_main_2(void) {
 }
 
-void stub_main_3(void) {
-}
-
 void setup_mesg_queues(void) {
     osCreateMesgQueue(&gDmaMesgQueue, gDmaMesgBuf, ARRAY_COUNT(gDmaMesgBuf));
     osCreateMesgQueue(&gSIEventMesgQueue, gSIEventMesgBuf, ARRAY_COUNT(gSIEventMesgBuf));
@@ -135,7 +131,6 @@ void setup_mesg_queues(void) {
 
     osSetEventMesg(OS_EVENT_SP, &gIntrMesgQueue, (OSMesg) MESG_SP_COMPLETE);
     osSetEventMesg(OS_EVENT_DP, &gIntrMesgQueue, (OSMesg) MESG_DP_COMPLETE);
-    osSetEventMesg(OS_EVENT_PRENMI, &gIntrMesgQueue, (OSMesg) MESG_NMI_REQUEST);
 }
 
 void alloc_pool(void) {
@@ -155,17 +150,6 @@ void create_thread(OSThread *thread, OSId id, void (*entry)(void *), void *arg, 
 #ifdef VERSION_SH
 extern void func_sh_802F69CC(void);
 #endif
-
-void handle_nmi_request(void) {
-    gResetTimer = 1;
-    D_8032C648 = 0;
-    func_80320890();
-    sound_banks_disable(2, 0x037A);
-    fadeout_music(90);
-#ifdef VERSION_SH
-    func_sh_802F69CC();
-#endif
-}
 
 void receive_new_tasks(void) {
     struct SPTask *spTask;
@@ -231,18 +215,7 @@ void pretend_audio_sptask_done(void) {
 void handle_vblank(void) {
     UNUSED s32 pad; // needed to pad the stack
 
-    stub_main_3();
     sNumVblanks++;
-#ifdef VERSION_SH
-    if (gResetTimer > 0 && gResetTimer < 100) {
-        gResetTimer++;
-    }
-#else
-    if (gResetTimer > 0) {
-        gResetTimer++;
-    }
-#endif
-
     receive_new_tasks();
 
     // First try to kick off an audio task. If the gfx task is currently
@@ -367,9 +340,6 @@ void thread3_main(UNUSED void *arg) {
             case MESG_START_GFX_SPTASK:
                 start_gfx_sptask();
                 break;
-            case MESG_NMI_REQUEST:
-                handle_nmi_request();
-                break;
         }
         stub_main_2();
     }
@@ -426,6 +396,9 @@ void turn_off_audio(void) {
     }
 }
 
+/* Crash Screen */
+extern void crash_screen_init(void);
+
 /**
  * Initialize hardware, start main thread, then idle.
  */
@@ -450,6 +423,10 @@ void thread1_idle(UNUSED void *arg) {
     osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON);
     osViSetSpecialFeatures(OS_VI_GAMMA_OFF);
     osCreatePiManager(OS_PRIORITY_PIMGR, &gPIMesgQueue, gPIMesgBuf, ARRAY_COUNT(gPIMesgBuf));
+
+    /* Crash Screen */
+    crash_screen_init();
+
     create_thread(&gMainThread, 3, thread3_main, NULL, gThread3Stack + 0x2000, 100);
     if (D_8032C650 == 0) {
         osStartThread(&gMainThread);

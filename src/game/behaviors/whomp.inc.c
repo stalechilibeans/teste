@@ -110,6 +110,10 @@ void whomp_act_4(void) {
     if (o->oTimer == 0)
         o->oVelY = 40.0f;
     if (o->oTimer < 8) {
+        if (o->oTimer % 2)
+            o->oFaceAnglePitch = 0x200;
+        else
+            o->oFaceAnglePitch = 0;
     } else {
         o->oAngleVelPitch += 0x100;
         o->oFaceAnglePitch += o->oAngleVelPitch;
@@ -123,8 +127,8 @@ void whomp_act_4(void) {
 
 void whomp_act_5(void) {
     if (o->oSubAction == 0 && o->oMoveFlags & 1) {
-        cur_obj_play_sound_2(SOUND_OBJ_WHOMP_LOWPRIO);
         cur_obj_shake_screen(SHAKE_POS_SMALL);
+        create_sound_spawner(SOUND_OBJ_THWOMP);
         o->oVelY = 0.0f;
         o->oSubAction++;
     }
@@ -168,12 +172,9 @@ void whomp_on_ground(void) {
     if (o->oSubAction == 0) {
         if (gMarioObject->platform == o) {
             if (cur_obj_is_mario_ground_pounding_platform()) {
-                o->oNumLootCoins = 5;
-                obj_spawn_loot_yellow_coins(o, 5, 20.0f);
+                o->oNumLootCoins = 3;
+                obj_spawn_loot_yellow_coins(o, 3, 20.0f);
                 o->oAction = 8;
-            } else {
-                cur_obj_spawn_loot_coin_at_mario_pos();
-                o->oSubAction++;
             }
         }
     } else if (!cur_obj_is_mario_on_platform())
@@ -222,8 +223,6 @@ void whomp_act_8(void) {
             o->oAction = 9;
         }
     } else {
-        spawn_mist_particles_variable(0, 0, 100.0f);
-        spawn_triangle_break_particles(20, 138, 3.0f, 4);
         cur_obj_shake_screen(SHAKE_POS_SMALL);
         create_sound_spawner(SOUND_OBJ_THWOMP);
         obj_mark_for_deletion(o);
@@ -235,10 +234,8 @@ void whomp_act_9(void) {
         stop_background_music(SEQUENCE_ARGS(4, SEQ_EVENT_BOSS));
 }
 
-void (*sWhompActions[])(void) = {
-    whomp_act_0, whomp_act_1, whomp_act_2, whomp_act_3, whomp_act_4,
-    whomp_act_5, whomp_act_6, whomp_act_7, whomp_act_8, whomp_act_9
-};
+void (*sWhompActions[])(void) = { whomp_act_0, whomp_act_1, whomp_act_2, whomp_act_3, whomp_act_4,
+                                  whomp_act_5, whomp_act_6, whomp_act_7, whomp_act_8, whomp_act_9 };
 
 // MM
 void bhv_whomp_loop(void) {

@@ -107,6 +107,15 @@ static s32 write_eeprom_data(void *buffer, s32 size) {
 }
 
 /**
+ * This is a stubbed write_eeprom_data function, it will always return 0.
+ * It prevents the overwriting of actual game saves.
+ */
+static s32 stub_write_eeprom_data(UNUSED void *buffer, UNUSED s32 size) {
+    s32 status = 0;
+    return status;
+}
+
+/**
  * Sum the bytes in data to data + size - 2. The last two bytes are ignored
  * because that is where the checksum is stored.
  */
@@ -159,7 +168,7 @@ static void restore_main_menu_data(s32 srcSlot) {
           sizeof(gSaveBuffer.menuData[destSlot]));
 
     // Write destination data to EEPROM
-    write_eeprom_data(&gSaveBuffer.menuData[destSlot], sizeof(gSaveBuffer.menuData[destSlot]));
+    stub_write_eeprom_data(&gSaveBuffer.menuData[destSlot], sizeof(gSaveBuffer.menuData[destSlot]));
 }
 
 static void save_main_menu_data(void) {
@@ -172,7 +181,7 @@ static void save_main_menu_data(void) {
         bcopy(&gSaveBuffer.menuData[0], &gSaveBuffer.menuData[1], sizeof(gSaveBuffer.menuData[1]));
 
         // Write to EEPROM
-        write_eeprom_data(gSaveBuffer.menuData, sizeof(gSaveBuffer.menuData));
+        stub_write_eeprom_data(gSaveBuffer.menuData, sizeof(gSaveBuffer.menuData));
 
         gMainMenuDataModified = FALSE;
     }
@@ -248,8 +257,8 @@ static void restore_save_file_data(s32 fileIndex, s32 srcSlot) {
           sizeof(gSaveBuffer.files[fileIndex][destSlot]));
 
     // Write destination data to EEPROM
-    write_eeprom_data(&gSaveBuffer.files[fileIndex][destSlot],
-                      sizeof(gSaveBuffer.files[fileIndex][destSlot]));
+    stub_write_eeprom_data(&gSaveBuffer.files[fileIndex][destSlot],
+                           sizeof(gSaveBuffer.files[fileIndex][destSlot]));
 }
 
 void save_file_do_save(s32 fileIndex) {
@@ -263,7 +272,7 @@ void save_file_do_save(s32 fileIndex) {
               sizeof(gSaveBuffer.files[fileIndex][1]));
 
         // Write to EEPROM
-        write_eeprom_data(gSaveBuffer.files[fileIndex], sizeof(gSaveBuffer.files[fileIndex]));
+        stub_write_eeprom_data(gSaveBuffer.files[fileIndex], sizeof(gSaveBuffer.files[fileIndex]));
 
         gSaveFileModified = FALSE;
     }
@@ -343,6 +352,16 @@ void save_file_load_all(void) {
 }
 
 /**
+ * Creates a temporary save file in order to function like a demo.
+ */
+void save_file_create_temporary_file(void) {
+    gMainMenuDataModified = FALSE;
+    gSaveFileModified = FALSE;
+
+    bzero(&gSaveBuffer, sizeof(gSaveBuffer));
+}
+
+/**
  * Reload the current save file from its backup copy, which is effectively a
  * a cached copy of what has been written to EEPROM.
  * This is used after getting a game over.
@@ -392,27 +411,8 @@ void save_file_collect_star_or_key(s16 coinScore, s16 starIndex) {
         }
     }
 
-    switch (gCurrLevelNum) {
-        case LEVEL_BOWSER_1:
-            if (!(save_file_get_flags() & (SAVE_FLAG_HAVE_KEY_1 | SAVE_FLAG_UNLOCKED_BASEMENT_DOOR))) {
-                save_file_set_flags(SAVE_FLAG_HAVE_KEY_1);
-            }
-            break;
-
-        case LEVEL_BOWSER_2:
-            if (!(save_file_get_flags() & (SAVE_FLAG_HAVE_KEY_2 | SAVE_FLAG_UNLOCKED_UPSTAIRS_DOOR))) {
-                save_file_set_flags(SAVE_FLAG_HAVE_KEY_2);
-            }
-            break;
-
-        case LEVEL_BOWSER_3:
-            break;
-
-        default:
-            if (!(save_file_get_star_flags(fileIndex, courseIndex) & starFlag)) {
-                save_file_set_star_flags(fileIndex, courseIndex, starFlag);
-            }
-            break;
+    if (!(save_file_get_star_flags(fileIndex, courseIndex) & starFlag)) {
+        save_file_set_star_flags(fileIndex, courseIndex, starFlag);
     }
 }
 

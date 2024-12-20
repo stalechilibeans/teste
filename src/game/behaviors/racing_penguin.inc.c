@@ -144,7 +144,9 @@ static void racing_penguin_act_show_final_text(void) {
             o->oForwardVel = 4.0f;
         }
     } else if (o->oRacingPenguinFinalTextbox > 0) {
-        if ((textResult = cur_obj_update_dialog_with_cutscene(2, 1, CUTSCENE_DIALOG, o->oRacingPenguinFinalTextbox)) != 0) {
+        if ((textResult = cur_obj_update_dialog_with_cutscene(2, 1, CUTSCENE_DIALOG,
+                                                              o->oRacingPenguinFinalTextbox))
+            != 0) {
             o->oRacingPenguinFinalTextbox = -1;
             o->oTimer = 0;
         }
@@ -185,7 +187,7 @@ void bhv_racing_penguin_update(void) {
     cur_obj_move_standard(78);
     cur_obj_align_gfx_with_floor();
     cur_obj_push_mario_away_from_cylinder(sRacingPenguinData[o->oBehParams2ndByte].radius,
-                                      sRacingPenguinData[o->oBehParams2ndByte].height);
+                                          sRacingPenguinData[o->oBehParams2ndByte].height);
 }
 
 void bhv_penguin_race_finish_line_update(void) {

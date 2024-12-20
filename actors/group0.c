@@ -6,7 +6,12 @@
 #include "make_const_nonconst.h"
 
 // Note: This bin does not use bin IDs, unlike the other segmented bins.
-#include "mario/model.inc.c"
+// Mario
+#include "mario/mario/gfx_mario.sou"
+
+/* Luigi
+#include "mario/luigi/luigi.c"
+*/
 
 #include "bubble/model.inc.c"
 

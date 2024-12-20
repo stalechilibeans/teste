@@ -22,15 +22,12 @@ struct ObjectHitbox sTweesterHitbox = {
  * its forward velocity.
  */
 void tweester_scale_and_move(f32 preScale) {
-    s16 dYaw  = 0x2C00;
+    s16 dYaw = 0x2C00;
     f32 scale = preScale * 0.4;
 
-    o->header.gfx.scale[0] 
-        = (( coss(o->oTweesterScaleTimer) + 1.0) * 0.5 * 0.3 + 1.0) * scale;
-    o->header.gfx.scale[1] 
-        = ((-coss(o->oTweesterScaleTimer) + 1.0) * 0.5 * 0.5 + 0.5) * scale;
-    o->header.gfx.scale[2] 
-        = (( coss(o->oTweesterScaleTimer) + 1.0) * 0.5 * 0.3 + 1.0) * scale;
+    o->header.gfx.scale[0] = ((coss(o->oTweesterScaleTimer) + 1.0) * 0.5 * 0.3 + 1.0) * scale;
+    o->header.gfx.scale[1] = ((-coss(o->oTweesterScaleTimer) + 1.0) * 0.5 * 0.5 + 0.5) * scale;
+    o->header.gfx.scale[2] = ((coss(o->oTweesterScaleTimer) + 1.0) * 0.5 * 0.3 + 1.0) * scale;
 
     o->oTweesterScaleTimer += 0x200;
     o->oForwardVel = 14.0f;
@@ -125,7 +122,7 @@ void tweester_act_hide(void) {
 void (*sTweesterActions[])(void) = { tweester_act_idle, tweester_act_chase, tweester_act_hide };
 
 /**
- * Loop behavior for Tweester. 
+ * Loop behavior for Tweester.
  * Loads the hitbox and calls its relevant action.
  */
 void bhv_tweester_loop(void) {

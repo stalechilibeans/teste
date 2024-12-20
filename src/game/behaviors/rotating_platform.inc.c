@@ -4,8 +4,7 @@
 #include "levels/wdw/header.h"
 
 struct WFRotatingPlatformData sWFRotatingPlatformData[] = {
-    { 0, 100, wf_seg7_collision_rotating_platform, 2000 },
-    { 0, 150, wdw_seg7_collision_070186B4, 1000 }
+    { 0, 100, wf_seg7_collision_rotating_platform, 2000 }, { 0, 150, wdw_seg7_collision_070186B4, 1000 }
 };
 
 void bhv_wf_rotating_wooden_platform_loop(void) {
@@ -19,7 +18,6 @@ void bhv_wf_rotating_wooden_platform_loop(void) {
         o->oAngleVelYaw = 0x100;
         if (o->oTimer > 126)
             o->oAction = 0;
-        cur_obj_play_sound_1(SOUND_ENV_ELEVATOR2);
     }
     cur_obj_rotate_face_angle_using_vel();
 }

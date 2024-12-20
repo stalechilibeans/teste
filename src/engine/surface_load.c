@@ -669,13 +669,7 @@ void load_object_surfaces(s16 **data, s16 *vertexData) {
     flags = surf_has_no_cam_collision(surfaceType);
     flags |= SURFACE_FLAG_DYNAMIC;
 
-    // The DDD warp is initially loaded at the origin and moved to the proper
-    // position in paintings.c and doesn't update its room, so set it here.
-    if (gCurrentObject->behavior == segmented_to_virtual(bhvDddWarp)) {
-        room = 5;
-    } else {
-        room = 0;
-    }
+    room = 0;
 
     for (i = 0; i < numSurfaces; i++) {
         struct Surface *surface = read_surface_data(vertexData, data);

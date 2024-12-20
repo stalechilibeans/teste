@@ -10,11 +10,11 @@ default: all
 # by building with 'make SETTING=value'. 'make clean' may be required.
 
 # Version of the game to build
-VERSION ?= us
+VERSION ?= jp
 # Graphics microcode used
 GRUCODE ?= f3d_old
 # If COMPARE is 1, check the output sha1sum when building 'all'
-COMPARE ?= 1
+COMPARE ?= 0
 # If NON_MATCHING is 1, define the NON_MATCHING and AVOID_UB macros when building (recommended)
 NON_MATCHING ?= 0
 # Build for the N64 (turn this off for ports)
@@ -125,10 +125,12 @@ endif
 endif
 
 # Make tools if out of date
-DUMMY != make -s -C tools >&2 || echo FAIL
+$(info Building tools...)
+DUMMY != make -s -C tools all-except-recomp >&2 || echo FAIL
 ifeq ($(DUMMY),FAIL)
   $(error Failed to build tools)
 endif
+$(info Building ROM...)
 
 endif
 endif
@@ -168,10 +170,10 @@ ifeq ($(COMPILER),gcc)
 endif
 
 ifeq ($(VERSION),eu)
-  OPT_FLAGS := -O2
+  OPT_FLAGS := -g
 else
 ifeq ($(VERSION),sh)
-  OPT_FLAGS := -O2
+  OPT_FLAGS := -g
 else
   OPT_FLAGS := -g
 endif
@@ -179,7 +181,7 @@ endif
 
 # Use a default opt flag for gcc
 ifeq ($(COMPILER),gcc)
-  OPT_FLAGS := -O2
+  OPT_FLAGS := -g
 endif
 
 # File dependencies and variables for specific files
@@ -240,7 +242,7 @@ GLOBAL_ASM_DEP = $(BUILD_DIR)/src/audio/non_matching_dep
 SEG_FILES := $(SEGMENT_ELF_FILES) $(ACTOR_ELF_FILES) $(LEVEL_ELF_FILES)
 
 ##################### Compiler Options #######################
-IRIX_ROOT := tools/ido5.3_compiler
+IDO_ROOT := tools/ido5.3_recomp
 
 ifeq ($(shell type mips-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
   CROSS := mips-linux-gnu-
@@ -250,16 +252,8 @@ else
   CROSS := mips64-elf-
 endif
 
-# check that either QEMU_IRIX is set or qemu-irix package installed
-ifndef QEMU_IRIX
-  QEMU_IRIX := $(shell which qemu-irix)
-  ifeq (, $(QEMU_IRIX))
-    $(error Please install qemu-irix package or set QEMU_IRIX env var to the full qemu-irix binary path)
-  endif
-endif
-
 AS        := $(CROSS)as
-CC        := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
+CC        := $(IDO_ROOT)/cc
 CPP       := cpp -P -Wno-trigraphs
 LD        := $(CROSS)ld
 AR        := $(CROSS)ar
@@ -465,14 +459,8 @@ $(BUILD_DIR)/actors/%.bin: $(BUILD_DIR)/actors/%.elf
 $(BUILD_DIR)/levels/%/leveldata.bin: $(BUILD_DIR)/levels/%/leveldata.elf
 	$(EXTRACT_DATA_FOR_MIO) $< $@
 
-$(BUILD_DIR)/%.mio0: $(BUILD_DIR)/%.bin
-	$(MIO0TOOL) $< $@
-
-$(BUILD_DIR)/%.mio0.o: $(BUILD_DIR)/%.mio0.s
-	$(AS) $(ASFLAGS) -o $@ $<
-
-$(BUILD_DIR)/%.mio0.s: $(BUILD_DIR)/%.mio0
-	printf ".section .data\n\n.incbin \"$<\"\n" > $@
+$(BUILD_DIR)/%.szp.o: $(BUILD_DIR)/%.bin
+	$(LD) -r -b binary $< -o $@
 
 $(BUILD_DIR)/%.table: %.aiff
 	$(AIFF_EXTRACT_CODEBOOK) $< >$@
@@ -531,40 +519,40 @@ $(BUILD_DIR)/actors/%.o: OPT_FLAGS := -g
 $(BUILD_DIR)/bin/%.o: OPT_FLAGS := -g
 $(BUILD_DIR)/src/goddard/%.o: OPT_FLAGS := -g
 $(BUILD_DIR)/src/goddard/%.o: MIPSISET := -mips1
-$(BUILD_DIR)/src/audio/%.o: OPT_FLAGS := -O2 -Wo,-loopunroll,0
-$(BUILD_DIR)/src/audio/load.o: OPT_FLAGS := -O2 -framepointer -Wo,-loopunroll,0
+$(BUILD_DIR)/src/audio/%.o: OPT_FLAGS := -g -Wo,-loopunroll,0
+$(BUILD_DIR)/src/audio/load.o: OPT_FLAGS := -g -framepointer -Wo,-loopunroll,0
 $(BUILD_DIR)/lib/src/%.o: OPT_FLAGS :=
 $(BUILD_DIR)/lib/src/math/ll%.o: MIPSISET := -mips3 -32
-$(BUILD_DIR)/lib/src/math/%.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/lib/src/math/%.o: OPT_FLAGS := -g
 $(BUILD_DIR)/lib/src/math/ll%.o: OPT_FLAGS :=
-$(BUILD_DIR)/lib/src/ldiv.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/lib/src/string.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/lib/src/gu%.o: OPT_FLAGS := -O3
-$(BUILD_DIR)/lib/src/al%.o: OPT_FLAGS := -O3
+$(BUILD_DIR)/lib/src/ldiv.o: OPT_FLAGS := -g
+$(BUILD_DIR)/lib/src/string.o: OPT_FLAGS := -g
+$(BUILD_DIR)/lib/src/gu%.o: OPT_FLAGS := -g
+$(BUILD_DIR)/lib/src/al%.o: OPT_FLAGS := -g
 
 ifeq ($(VERSION),eu)
-$(BUILD_DIR)/lib/src/_Litob.o: OPT_FLAGS := -O3
-$(BUILD_DIR)/lib/src/_Ldtob.o: OPT_FLAGS := -O3
-$(BUILD_DIR)/lib/src/_Printf.o: OPT_FLAGS := -O3
-$(BUILD_DIR)/lib/src/sprintf.o: OPT_FLAGS := -O3
+$(BUILD_DIR)/lib/src/_Litob.o: OPT_FLAGS := -g
+$(BUILD_DIR)/lib/src/_Ldtob.o: OPT_FLAGS := -g
+$(BUILD_DIR)/lib/src/_Printf.o: OPT_FLAGS := -g
+$(BUILD_DIR)/lib/src/sprintf.o: OPT_FLAGS := -g
 
 # enable loop unrolling except for external.c (external.c might also have used
 # unrolling, but it makes one loop harder to match)
-$(BUILD_DIR)/src/audio/%.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/audio/load.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/audio/external.o: OPT_FLAGS := -O2 -Wo,-loopunroll,0
+$(BUILD_DIR)/src/audio/%.o: OPT_FLAGS := -g
+$(BUILD_DIR)/src/audio/load.o: OPT_FLAGS := -g
+$(BUILD_DIR)/src/audio/external.o: OPT_FLAGS := -g -Wo,-loopunroll,0
 else
 
 # The source-to-source optimizer copt is enabled for audio. This makes it use
 # acpp, which needs -Wp,-+ to handle C++-style comments.
-$(BUILD_DIR)/src/audio/effects.o: OPT_FLAGS := -O2 -Wo,-loopunroll,0 -sopt,-inline=sequence_channel_process_sound,-scalaroptimize=1 -Wp,-+
-$(BUILD_DIR)/src/audio/synthesis.o: OPT_FLAGS := -O2 -sopt,-scalaroptimize=1 -Wp,-+
+$(BUILD_DIR)/src/audio/effects.o: OPT_FLAGS := -g -Wo,-loopunroll,0 -sopt,-inline=sequence_channel_process_sound,-scalaroptimize=1 -Wp,-+
+$(BUILD_DIR)/src/audio/synthesis.o: OPT_FLAGS := -g -sopt,-scalaroptimize=1 -Wp,-+
 
 # Add a target for build/eu/src/audio/*.copt to make it easier to see debug
 $(BUILD_DIR)/src/audio/%.acpp: src/audio/%.c
-	$(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/lib/acpp $(TARGET_CFLAGS) $(INCLUDE_CFLAGS) $(VERSION_CFLAGS) $(GRUCODE_CFLAGS) -D__sgi -+ $< > $@ 
+	$(IDO_ROOT)/acpp $(TARGET_CFLAGS) $(INCLUDE_CFLAGS) $(VERSION_CFLAGS) $(GRUCODE_CFLAGS) -D__sgi -+ $< > $@ 
 $(BUILD_DIR)/src/audio/%.copt: $(BUILD_DIR)/src/audio/%.acpp
-	$(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/lib/copt -signed -I=$< -CMP=$@ -cp=i -scalaroptimize=1
+	$(IDO_ROOT)/copt -signed -I=$< -CMP=$@ -cp=i -scalaroptimize=1
 endif
 endif
 
@@ -604,7 +592,7 @@ $(ELF): $(O_FILES) $(MIO0_OBJ_FILES) $(SOUND_OBJ_FILES) $(SEG_FILES) $(BUILD_DIR
 	$(LD) -L $(BUILD_DIR) $(LDFLAGS) -o $@ $(O_FILES)$(LIBS) -lultra -lgoddard
 
 $(ROM): $(ELF)
-	$(OBJCOPY) $(OBJCOPYFLAGS) $< $(@:.z64=.bin) -O binary
+	$(OBJCOPY) $< $(@:.z64=.bin) -O binary
 	$(N64CKSUM) $(@:.z64=.bin) $@
 
 $(BUILD_DIR)/$(TARGET).objdump: $(ELF)

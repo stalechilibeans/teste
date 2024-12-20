@@ -6,7 +6,6 @@ s16 D_8032F894[] = { 4,  0,      0, 0, 1,   475, 900, 30, 1,  30, 0,   -30, 2,
                      30, 0x8000, 0, 1, 475, 900, 30,  1,  30, 0,  -30, 3,   0 };
 s16 *D_8032F8C8[] = { D_8032F860, D_8032F894 };
 
-
 s32 lll_octagonal_mesh_move(s16 *a0, s32 a1) {
     switch (a0[a1]) {
         case 4:
@@ -68,7 +67,8 @@ void bhv_lll_moving_octagonal_mesh_platform_loop(void) {
             lll_octagonal_mesh_move(D_8032F8C8[o->oBehParams2ndByte], o->oHorizontalMovementUnkF8);
     print_debug_top_down_objectinfo("number %d\n", o->oHorizontalMovementUnkF8);
     cur_obj_move_using_fvel_and_gravity();
-    if (lll_octagonal_mesh_find_y_offset(&o->oHorizontalMovementUnk104, &o->oHorizontalMovementUnk108, 0x400, -80)) {
+    if (lll_octagonal_mesh_find_y_offset(&o->oHorizontalMovementUnk104, &o->oHorizontalMovementUnk108,
+                                         0x400, -80)) {
         o->oHorizontalMovementUnkF4 += 0x800;
         o->oHorizontalMovementUnk100 -= sins(o->oHorizontalMovementUnkF4) * 2;
     }

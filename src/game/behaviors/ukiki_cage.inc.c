@@ -21,8 +21,8 @@ void bhv_ukiki_cage_star_loop(void) {
             if (o->oTimer == 0) {
                 if (bit_shift_left(1)
                     & save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1)) {
-                        cur_obj_set_model(MODEL_TRANSPARENT_STAR);
-                    }
+                    cur_obj_set_model(MODEL_TRANSPARENT_STAR);
+                }
             }
 
             obj_copy_pos(o, o->parentObj);
@@ -94,8 +94,10 @@ void ukiki_cage_act_hide(void) {
  * An array of the cage's actions.
  */
 void (*sUkikiCageActions[])(void) = {
-    ukiki_cage_act_wait_for_ukiki, ukiki_cage_act_spin,
-    ukiki_cage_act_fall,           ukiki_cage_act_hide,
+    ukiki_cage_act_wait_for_ukiki,
+    ukiki_cage_act_spin,
+    ukiki_cage_act_fall,
+    ukiki_cage_act_hide,
 };
 
 /**

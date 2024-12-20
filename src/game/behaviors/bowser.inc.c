@@ -26,6 +26,21 @@ void bowser_tail_anchor_act_2(void) {
     cur_obj_become_intangible();
 }
 
+static struct SpawnParticlesInfo sBowserExplodeParticles = {
+    /* behParam:        */ 0,
+    /* count:           */ 20,
+    /* model:           */ MODEL_SMOKE,
+    /* offsetY:         */ -50,
+    /* forwardVelBase:  */ 3,
+    /* forwardVelRange: */ -18,
+    /* velYBase:        */ 3,
+    /* velYRange:       */ -18,
+    /* gravity:         */ -1,
+    /* dragStrength:    */ 0,
+    /* sizeBase:        */ 35.0f,
+    /* sizeRange:       */ 0.0f,
+};
+
 void (*sBowserTailAnchorActions[])(void) = { bowser_tail_anchor_act_0, bowser_tail_anchor_act_1,
                                              bowser_tail_anchor_act_2 };
 s8 D_8032F4FC[] = { 7, 8, 9, 12, 13, 14, 15, 4, 3, 16, 17, 19, 3, 3, 3, 3 };
@@ -33,9 +48,11 @@ s16 D_8032F50C[] = { 60, 0 };
 s16 D_8032F510[] = { 50, 0 };
 s8 D_8032F514[] = { 24, 42, 60, -1 };
 s16 sBowserDefeatedDialogText[3] = { DIALOG_119, DIALOG_120, DIALOG_121 };
-s16 D_8032F520[][3] = { { 1, 10, 40 },   { 0, 0, 74 },    { -1, -10, 114 },  { 1, -20, 134 },
-                        { -1, 20, 154 }, { 1, 40, 164 },  { -1, -40, 174 },  { 1, -80, 179 },
-                        { -1, 80, 184 }, { 1, 160, 186 }, { -1, -160, 186 }, { 1, 0, 0 }, };
+s16 D_8032F520[][3] = {
+    { 1, 10, 40 },   { 0, 0, 74 },    { -1, -10, 114 },  { 1, -20, 134 },
+    { -1, 20, 154 }, { 1, 40, 164 },  { -1, -40, 174 },  { 1, -80, 179 },
+    { -1, 80, 184 }, { 1, 160, 186 }, { -1, -160, 186 }, { 1, 0, 0 },
+};
 
 void bhv_bowser_tail_anchor_loop(void) {
     cur_obj_call_action_function(sBowserTailAnchorActions);
@@ -75,20 +92,10 @@ void bhv_bowser_flame_spawn_loop(void) {
 void bhv_bowser_body_anchor_loop(void) {
     obj_copy_pos_and_angle(o, o->parentObj);
     if (o->parentObj->oAction == 4) {
-#ifndef VERSION_JP
-        if (o->parentObj->oSubAction == 11)
-            o->oInteractType = 0;
-        else
-            o->oInteractType = 0x800000;
-#else
-        o->oInteractType = 0x800000;
-#endif
+        cur_obj_become_intangible();
     } else {
         o->oInteractType = 8;
-        if (o->parentObj->oOpacity < 100)
-            cur_obj_become_intangible();
-        else
-            cur_obj_become_tangible();
+        cur_obj_become_tangible();
     }
     if (o->parentObj->oHeldState != HELD_FREE)
         cur_obj_become_intangible();
@@ -110,7 +117,6 @@ void bowser_bounce(s32 *a) {
         a[0]++;
         if (a[0] < 4) {
             cur_obj_start_cam_event(o, CAM_EVENT_BOWSER_THROW_BOUNCE);
-            spawn_mist_particles_variable(0, 0, 60.0f);
             cur_obj_play_sound_2(SOUND_OBJ_BOWSER_WALK);
         }
     }
@@ -456,7 +462,6 @@ s32 bowser_land(void) {
     if (o->oMoveFlags & 1) {
         o->oForwardVel = 0;
         o->oVelY = 0;
-        spawn_mist_particles_variable(0, 0, 60.0f);
         cur_obj_init_animation_with_sound(8);
         o->header.gfx.unk38.animFrame = 0;
         cur_obj_start_cam_event(o, CAM_EVENT_BOWSER_JUMP);
@@ -606,8 +611,7 @@ void bowser_act_charge_mario(void) {
             o->oBowserUnkF8 = 0;
             cur_obj_init_animation_with_sound(21);
             spawn_object_relative_with_scale(0, 100, -50, 0, 3.0f, o, MODEL_SMOKE, bhvWhitePuffSmoke2);
-            spawn_object_relative_with_scale(0, -100, -50, 0, 3.0f, o, MODEL_SMOKE,
-                                             bhvWhitePuffSmoke2);
+            spawn_object_relative_with_scale(0, -100, -50, 0, 3.0f, o, MODEL_SMOKE, bhvWhitePuffSmoke2);
             if (approach_f32_signed(&o->oForwardVel, 0, -1.0f))
                 o->oSubAction = 2;
             cur_obj_extend_animation_if_at_end();
@@ -642,8 +646,7 @@ s32 bowser_check_hit_mine(void) {
     return 0;
 }
 
-void bowser_act_thrown_dropped(void)
-{
+void bowser_act_thrown_dropped(void) {
     UNUSED s32 unused;
     if (o->oTimer < 2)
         o->oBowserUnkF8 = 0;
@@ -756,21 +759,13 @@ void bowser_act_dance(void) {
 }
 
 void bowser_spawn_grand_star_key(void) {
-    if (BITS)
-        gSecondCameraFocus = spawn_object(o, MODEL_STAR, bhvGrandStar);
-    else {
-        gSecondCameraFocus = spawn_object(o, MODEL_BOWSER_KEY, bhvBowserKey);
-        cur_obj_play_sound_2(SOUND_GENERAL2_BOWSER_KEY);
-    }
-    gSecondCameraFocus->oAngleVelYaw = o->oAngleVelYaw;
+    spawn_object_relative(0, 0, 200.0f, 200.0f, o, MODEL_STAR, bhvStar);
+    obj_spawn_loot_yellow_coins(o, 20, 10.0f);
 }
 
 void bowser_fly_back_dead(void) {
     cur_obj_init_animation_with_sound(16);
-    if (BITS)
-        o->oForwardVel = -400.0f;
-    else
-        o->oForwardVel = -200.0f;
+    o->oForwardVel = -35.0f;
     o->oVelY = 100.0f;
     o->oMoveAngleYaw = o->oBowserAngleToCentre + 0x8000;
     o->oBowserUnkF8 = 0;
@@ -799,28 +794,27 @@ s32 bowser_dead_wait_for_mario(void) {
     return ret;
 }
 
+s8 timer;
+
 s32 bowser_dead_twirl_into_trophy(void) {
     s32 ret = 0;
-    if (o->header.gfx.scale[0] < 0.8)
-        o->oAngleVelYaw += 0x80;
-    if (o->header.gfx.scale[0] > 0.2) {
+    if (o->header.gfx.scale[0] > 0.0) {
         o->header.gfx.scale[0] = o->header.gfx.scale[0] - 0.02;
+        o->header.gfx.scale[1] = o->header.gfx.scale[1] - 0.02;
         o->header.gfx.scale[2] = o->header.gfx.scale[2] - 0.02;
-    } else {
-        o->header.gfx.scale[1] = o->header.gfx.scale[1] - 0.01;
-        o->oVelY = 20.0f;
-        o->oGravity = 0.0f;
     }
-    if (o->header.gfx.scale[1] < 0.5)
+    if (o->header.gfx.scale[1] <= 0.0 && timer == 0)
+        cur_obj_spawn_particles(&sBowserExplodeParticles);
+    if (o->header.gfx.scale[1] <= 0.0 && timer < 5)
+        timer++;
+    if (o->header.gfx.scale[1] <= 0.0 && timer == 5)
         ret = 1;
-    o->oMoveAngleYaw += o->oAngleVelYaw;
-    if (o->oOpacity >= 3)
-        o->oOpacity -= 2;
     return ret;
 }
 
 void bowser_dead_hide(void) {
     cur_obj_scale(0);
+    cur_obj_become_intangible();
     o->oForwardVel = 0;
     o->oVelY = 0;
     o->oGravity = 0;
@@ -828,22 +822,12 @@ void bowser_dead_hide(void) {
 
 s32 bowser_dead_not_bits_end(void) {
     s32 ret = 0;
-    if (o->oBowserUnkF8 < 2) {
-        if (o->oBowserUnkF8 == 0) {
-            func_8031FFB4(SEQ_PLAYER_LEVEL, 60, 40);
+    if (o->oBowserUnkF8 < 1) {
+        if (cur_obj_init_animation_and_check_if_near_end(17))
             o->oBowserUnkF8++;
-        }
-        if (cur_obj_update_dialog(2, 18, sBowserDefeatedDialogText[o->oBehParams2ndByte], 0)) {
-            o->oBowserUnkF8++;
-            cur_obj_play_sound_2(SOUND_GENERAL2_BOWSER_EXPLODE);
-            sequence_player_unlower(SEQ_PLAYER_LEVEL, 60);
-            sequence_player_fade_out(0, 1);
-        }
     } else if (bowser_dead_twirl_into_trophy()) {
         bowser_dead_hide();
-        spawn_triangle_break_particles(20, 116, 1.0f, 0);
         bowser_spawn_grand_star_key();
-        set_mario_npc_dialog(0);
         ret = 1;
     }
     return ret;
@@ -887,15 +871,9 @@ void bowser_act_dead(void) {
             bowser_dead_bounce();
             break;
         case 2:
-            if (bowser_dead_wait_for_mario()) {
-                o->oBowserUnkF8 = 0;
-                if (BITS)
-                    o->oSubAction = 10;
-                else {
-                    o->activeFlags |= 0x80;
-                    o->oSubAction++;
-                }
-            }
+            o->oBowserUnkF8 = 0;
+            o->activeFlags |= 0x80;
+            o->oSubAction++;
             break;
         case 3:
             if (bowser_dead_not_bits_end())
@@ -972,11 +950,26 @@ s32 bowser_check_fallen_off_stage(void) // bowser off stage?
     return 0;
 }
 
-void (*sBowserActions[])(void) = { bowser_act_default,  bowser_act_thrown_dropped,  bowser_act_jump_onto_stage,  bowser_act_dance,
-                                   bowser_act_dead,  bowser_act_text_wait,  bowser_act_intro_walk,  bowser_act_charge_mario,
-                                   bowser_act_spit_fire_into_sky,  bowser_act_spit_fire_onto_floor,  bowser_act_hit_edge, bowser_act_turn_from_edge,
-                                   bowser_act_hit_mine, bowser_act_jump, bowser_act_walk_to_mario, bowser_act_breath_fire,
-                                   bowser_act_teleport, bowser_act_jump_towards_mario, bowser_act_unused_slow_walk, bowser_act_ride_tilting_platform };
+void (*sBowserActions[])(void) = { bowser_act_default,
+                                   bowser_act_thrown_dropped,
+                                   bowser_act_jump_onto_stage,
+                                   bowser_act_dance,
+                                   bowser_act_dead,
+                                   bowser_act_text_wait,
+                                   bowser_act_intro_walk,
+                                   bowser_act_charge_mario,
+                                   bowser_act_spit_fire_into_sky,
+                                   bowser_act_spit_fire_onto_floor,
+                                   bowser_act_hit_edge,
+                                   bowser_act_turn_from_edge,
+                                   bowser_act_hit_mine,
+                                   bowser_act_jump,
+                                   bowser_act_walk_to_mario,
+                                   bowser_act_breath_fire,
+                                   bowser_act_teleport,
+                                   bowser_act_jump_towards_mario,
+                                   bowser_act_unused_slow_walk,
+                                   bowser_act_ride_tilting_platform };
 struct SoundState D_8032F5B8[] = { { 0, 0, 0, NO_SOUND },
                                    { 0, 0, 0, NO_SOUND },
                                    { 0, 0, 0, NO_SOUND },
@@ -993,8 +986,8 @@ struct SoundState D_8032F5B8[] = { { 0, 0, 0, NO_SOUND },
                                    { 1, 20, 40, SOUND_OBJ_BOWSER_WALK },
                                    { 1, 20, -1, SOUND_OBJ_BOWSER_WALK },
                                    { 1, 20, 40, SOUND_OBJ_BOWSER_WALK },
-                                   { 1, 0, -1, SOUND_OBJ_BOWSER_TAIL_PICKUP },
                                    { 1, 0, -1, SOUND_OBJ_BOWSER_DEFEATED },
+                                   { 0, 0, 0, NO_SOUND },
                                    { 1, 8, -1, SOUND_OBJ_BOWSER_WALK },
                                    { 1, 8, 17, SOUND_OBJ_BOWSER_WALK },
                                    { 1, 8, -10, SOUND_OBJ_BOWSER_WALK },
@@ -1076,7 +1069,7 @@ void bowser_thrown_dropped_update(void) {
     f32 sp1C;
     o->oBowserUnk10E = 0;
     cur_obj_get_thrown_or_placed(1.0f, 1.0f, 1);
-    sp1C = o->oBowserHeldAngleVelYaw / 3000.0 * 70.0f;
+    sp1C = o->oBowserHeldAngleVelYaw / 3000.0 * 60.0f;
     if (sp1C < 0.0f)
         sp1C = -sp1C;
     if (sp1C > 90.0f)
@@ -1272,7 +1265,8 @@ Gfx *geo_bits_bowser_coloring(s32 a0, struct GraphNode *node, UNUSED s32 a2) {
         if (sp24->oOpacity == 0xFF)
             sp20->fnNode.node.flags = (sp20->fnNode.node.flags & 0xFF) | GRAPH_NODE_TYPE_FUNCTIONAL;
         else
-            sp20->fnNode.node.flags = (sp20->fnNode.node.flags & 0xFF) | (GRAPH_NODE_TYPE_FUNCTIONAL | GRAPH_NODE_TYPE_400);
+            sp20->fnNode.node.flags =
+                (sp20->fnNode.node.flags & 0xFF) | (GRAPH_NODE_TYPE_FUNCTIONAL | GRAPH_NODE_TYPE_400);
         sp28 = sp2C = alloc_display_list(2 * sizeof(Gfx));
 
         if (sp24->oBowserUnk1B2 != 0) {
@@ -1327,10 +1321,8 @@ void falling_bowser_plat_act_2(void) {
         o->oPosX = D_8032F698[o->oBehParams2ndByte].unk1 + sins(sp22 + 5296) * sp1C;
         o->oPosZ = D_8032F698[o->oBehParams2ndByte].unk2 + coss(sp22 + 5296) * sp1C;
         o->oPosY = 307.0f;
-        spawn_mist_particles_variable(4, 0, 100.0f);
         o->oPosX = D_8032F698[o->oBehParams2ndByte].unk1 + sins(sp22 - 5296) * sp1C;
         o->oPosZ = D_8032F698[o->oBehParams2ndByte].unk2 + coss(sp22 - 5296) * sp1C;
-        spawn_mist_particles_variable(4, 0, 100);
         vec3f_copy_2(&o->oPosX, sp24);
     }
     cur_obj_move_using_fvel_and_gravity();
@@ -1338,8 +1330,7 @@ void falling_bowser_plat_act_2(void) {
         obj_mark_for_deletion(o);
 }
 
-void (*sFallingBowserPlatformActions[])(void) = { falling_bowser_plat_act_0,
-                                                  falling_bowser_plat_act_1,
+void (*sFallingBowserPlatformActions[])(void) = { falling_bowser_plat_act_0, falling_bowser_plat_act_1,
                                                   falling_bowser_plat_act_2 };
 
 struct ObjectHitbox sGrowingBowserFlameHitbox = {

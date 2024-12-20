@@ -49,8 +49,8 @@ void water_ring_check_collection(f32 avgScale, struct Object *ringManager) {
     struct Object *ringSpawner;
 
     if (!is_point_close_to_object(o, gMarioObject->header.gfx.pos[0],
-                              gMarioObject->header.gfx.pos[1] + 80.0f, gMarioObject->header.gfx.pos[2],
-                              (avgScale + 0.2) * 120.0)) {
+                                  gMarioObject->header.gfx.pos[1] + 80.0f,
+                                  gMarioObject->header.gfx.pos[2], (avgScale + 0.2) * 120.0)) {
         o->oWaterRingMarioDistInFront = marioDistInFront;
         return;
     }
@@ -61,17 +61,6 @@ void water_ring_check_collection(f32 avgScale, struct Object *ringManager) {
             if ((o->oWaterRingIndex == ringManager->oWaterRingMgrLastRingCollected + 1)
                 || (ringSpawner->oWaterRingSpawnerRingsCollected == 0)) {
                 ringSpawner->oWaterRingSpawnerRingsCollected++;
-                if (ringSpawner->oWaterRingSpawnerRingsCollected < 6) {
-                    spawn_orange_number(ringSpawner->oWaterRingSpawnerRingsCollected, 0, -40, 0);
-#ifdef VERSION_JP
-                    play_sound(SOUND_MENU_STAR_SOUND, gDefaultSoundArgs);
-#else
-                    play_sound(SOUND_MENU_COLLECT_SECRET
-                                   + (((u8) ringSpawner->oWaterRingSpawnerRingsCollected - 1) << 16),
-                               gDefaultSoundArgs);
-#endif
-                }
-
                 ringManager->oWaterRingMgrLastRingCollected = o->oWaterRingIndex;
             } else
                 ringSpawner->oWaterRingSpawnerRingsCollected = 0;

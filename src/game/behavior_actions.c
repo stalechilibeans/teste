@@ -121,9 +121,6 @@ s16 D_8032F0CC[] = { 6047, 5664, 5292, 4934, 4587, 4254, 3933, 3624, 3329, 3046,
 #include "behaviors/water_objs.inc.c"
 #include "behaviors/cannon.inc.c"
 #include "behaviors/chuckya.inc.c"
-#include "behaviors/breakable_wall.inc.c"
-#include "behaviors/kickable_board.inc.c"
-#include "behaviors/tower_door.inc.c"
 #include "behaviors/rotating_platform.inc.c"
 #include "behaviors/koopa_shell_underwater.inc.c"
 #include "behaviors/warp.inc.c"
@@ -233,7 +230,6 @@ void vec3f_copy_2(Vec3f dest, Vec3f src) {
 }
 
 #include "behaviors/checkerboard_platform.inc.c"
-#include "behaviors/ddd_warp.inc.c"
 #include "behaviors/water_pillar.inc.c"
 #include "behaviors/moat_drainer.inc.c"
 #include "behaviors/bowser_key_cutscene.inc.c"
